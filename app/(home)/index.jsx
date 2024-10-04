@@ -1,6 +1,7 @@
-import Hero17 from "../../components/hero/hero-17";
+import MainBanner from "../../components/common/main/MainBanner";
 import Header from "./Header";
 import Login from "../../components/common/form/login/Login";
+import MobileMenu from "../../components/header/MobileMenu";
 import Link from "next/link";
 
 const index = () => {
@@ -12,7 +13,10 @@ const index = () => {
       <Header />
       {/* <!--End Main Header --> */}
 
-      <Hero17 />
+      <MobileMenu />
+      {/* End MobileMenu */}
+
+      <MainBanner />
       {/* End Hero Section */}
 
     </>

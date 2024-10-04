@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import HeaderNavContent from "../../components/header/HeaderNavContent";
 import Image from "next/image";
 
 const Header = () => {
@@ -49,7 +48,7 @@ const Header = () => {
           {/* End .nav-outer */}
 
           <div className="outer-box">
-            <HeaderNavContent />
+            
             {/* <!-- Main Menu End--> */}
 
             {/* <!-- Login/Register --> */}
