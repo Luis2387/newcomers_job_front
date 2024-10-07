@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import authService from '../../../../services/authService';
 import Link from 'next/link';
 
@@ -9,6 +10,8 @@ const FormContent = () => {
     username: '',
     password: '',
   });
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +31,19 @@ const FormContent = () => {
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
 
-      alert('Login successful');
+      document.querySelector('body > div.modal-backdrop.fade.show').style.display = 'none';
+
+      const profile = await authService.userTypeProfile(access);
+      const userType = profile.user_type;
+
+      if (userType === 'employer') {
+        router.push('/employer-dashboard/dashboard');
+      } else if (userType === 'jobseeker') {
+        //router.push('/jobseeker-dashboard/dashboard');
+      } else {
+        alert('Login successful');
+      }
+
     } catch (error) {
       console.error('Error logging in:', error.response?.data || error.message);
       alert('Failed to login');
