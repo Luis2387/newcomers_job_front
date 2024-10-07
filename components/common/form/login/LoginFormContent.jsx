@@ -37,7 +37,7 @@ const FormContent = () => {
       const userType = profile.user_type;
 
       if (userType === 'employer') {
-        router.push('/employer-dashboard/dashboard');
+        router.push('/employers-dashboard/dashboard');
       } else if (userType === 'jobseeker') {
         //router.push('/jobseeker-dashboard/dashboard');
       } else {
