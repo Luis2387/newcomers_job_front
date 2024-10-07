@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import DashboadHome from "@/components/dashboard-pages/employer-dashboard/dashboard";
+import DashboadHome from "@/components/dashboard-pages/employers-dashboard/dashboard";
 
 export const metadata = {
   title: "Employer Dashboard",
