@@ -3,7 +3,6 @@ import DashboardHeader from "../../../header/DashboardHeader";
 import Login from "../../../common/form/login/Login";
 import DashboardEmployerSidebar from "../../../header/DashboardEmployerSidebar";
 import BreadCrumb from "../../BreadCrumb";
-import PostJobSteps from "./components/PostJobSteps";
 import PostBoxForm from "./components/PostBoxForm";
 import MenuToggler from "../../MenuToggler";
 
@@ -44,8 +43,7 @@ const index = () => {
                   </div>
 
                   <div className="widget-content">
-                    <PostJobSteps />
-                    {/* End job steps form */}
+                
                     <PostBoxForm />
                     {/* End post box form */}
                   </div>
