@@ -26,7 +26,7 @@ module.exports = [
     items: [
      
       {
-        name: "Job Single V3",
+        name: "Job Single ",
         routePath: "/job-single-v3/3",
       },
       

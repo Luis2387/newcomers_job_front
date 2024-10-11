@@ -3,7 +3,7 @@ export const homeItems = [
     id: 1,
     items: [
       {
-        name: "Home Page 17",
+        name: "Home Page ",
         routePath: "/home-17",
       },
     ],
@@ -21,9 +21,21 @@ export const findJobItems = [
         routePath: "/job-list",
       },
       
-      
     ],
   },
+  {
+    id: 4,
+    title: "Jobs Single",
+    items: [
+      
+      {
+        name: "Job Single ",
+        routePath: "/job-single-v3/3",
+      
+      },
+    ],
+  },
+
 ];
 
 

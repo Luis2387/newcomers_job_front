@@ -26,10 +26,10 @@ const index = ({ footerStyle = "" }) => {
                   <a href="thebeehost@support.com">123 456 7890</a>
                 </p>
                 <p className="address">
-                  329 Queensberry Street, North Melbourne VIC
-                  <br /> 3051, Australia. <br />
-                  <a href="mailto:support@superio.com" className="email">
-                    support@superio.com
+                  2329 Victoria Drive, Vancouver
+                  
+                  <a href="mailto:support@jobs.com" className="email">
+                   
                   </a>
                 </p>
               </div>
