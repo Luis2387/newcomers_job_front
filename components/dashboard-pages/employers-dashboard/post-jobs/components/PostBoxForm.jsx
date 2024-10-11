@@ -1,223 +1,266 @@
-
-'use client'
+"use client";
 
 import Map from "../../../Map";
 import Select from "react-select";
+import { useState, useRef } from "react";
 
 const PostBoxForm = () => {
-  const specialisms = [
+  // check empty input
+  const [formValues, setFormValues] = useState({
+    jobTitle: "",
+    jobDescription: "",
+    experienceLevel: "",
+    minSalary: "",
+    maxSalary: "",
+    location: "",
+  });
+
+  // check empty input
+  const jobTitleRef = useRef(null);
+  const jobDescriptionRef = useRef(null);
+  const experienceLevelRef = useRef(null);
+  const minSalaryRef = useRef(null);
+  const maxSalaryRef = useRef(null);
+  const locationRef = useRef(null);
+
+  const skills = [
     { value: "Banking", label: "Banking" },
     { value: "Digital & Creative", label: "Digital & Creative" },
     { value: "Retail", label: "Retail" },
     { value: "Human Resources", label: "Human Resources" },
-    { value: "Managemnet", label: "Managemnet" },
+    { value: "Management", label: "Management" },
     { value: "Accounting & Finance", label: "Accounting & Finance" },
     { value: "Digital", label: "Digital" },
     { value: "Creative Art", label: "Creative Art" },
   ];
 
+  // check empty input
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Check if jobTitle is empty
+    if (!formValues.jobTitle) {
+      alert("Please fill out Job Title");
+      jobTitleRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if jobDescription is empty
+    if (!formValues.jobDescription) {
+      alert("Please fill out Job Description");
+      jobDescriptionRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if experienceLevel is empty
+    if (!formValues.experienceLevel) {
+      alert("Please fill out Experience Level");
+      experienceLevelRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if Category is selected (not 'Select')
+    const categorySelect = document.querySelector('select[name="category"]');
+    if (categorySelect.value === "Select") {
+      alert("Please select a valid Category");
+      categorySelect.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if Type is selected (not 'Select')
+    const typeSelect = document.querySelector('select[name="type"]');
+    if (typeSelect.value === "Select") {
+      alert("Please select a valid Type");
+      typeSelect.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if minSalary is a positive number
+    if (
+      !formValues.minSalary ||
+      isNaN(formValues.minSalary) ||
+      Number(formValues.minSalary) <= 0
+    ) {
+      alert("Min Salary must be a positive number");
+      minSalaryRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if maxSalary is a positive number and greater than minSalary
+    if (
+      !formValues.maxSalary ||
+      isNaN(formValues.maxSalary) ||
+      Number(formValues.maxSalary) <= 0
+    ) {
+      alert("Max Salary must be a positive number");
+      maxSalaryRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    if (Number(formValues.maxSalary) < Number(formValues.minSalary)) {
+      alert("Max Salary should be greater than Min Salary");
+      maxSalaryRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if Education Level is selected (not 'Select')
+    const educationSelect = document.querySelector('select[name="education"]');
+    if (educationSelect.value === "Select") {
+      alert("Please select a valid Education Level");
+      educationSelect.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // Check if location is empty
+    if (!formValues.location) {
+      alert("Please fill out Location");
+      locationRef.current.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    alert("Form submitted successfully!");
+    console.log("Form Submitted", formValues);
+  };
+
   return (
-    <form className="default-form">
+    <form className="default-form" onSubmit={handleSubmit}>
       <div className="row">
-        {/* <!-- Input --> */}
+        {/* Job Title */}
         <div className="form-group col-lg-12 col-md-12">
           <label>Job Title</label>
-          <input type="text" name="name" placeholder="Title" />
+          <input
+            type="text"
+            name="jobTitle"
+            placeholder="Title"
+            value={formValues.jobTitle}
+            onChange={handleInputChange}
+            ref={jobTitleRef}
+          />
         </div>
 
-        {/* <!-- About Company --> */}
-        <div className="form-group col-lg-12 col-md-12">
+        {/* Job Description */}
+        <div className="form-group col-lg-12 col-md-12" ref={jobDescriptionRef}>
           <label>Job Description</label>
-          <textarea placeholder="Spent several years working on sheep on Wall Street. Had moderate success investing in Yugo's on Wall Street. Managed a small team buying and selling Pogo sticks for farmers. Spent several years licensing licorice in West Palm Beach, FL. Developed several new methods for working it banjos in the aftermarket. Spent a weekend importing banjos in West Palm Beach, FL.In this position, the Software Engineer collaborates with Evention's Development team to continuously enhance our current software solutions as well as create new solutions to eliminate the back-office operations and management challenges present"></textarea>
+          <textarea
+            name="jobDescription"
+            placeholder="Please enter job description"
+            value={formValues.jobDescription}
+            onChange={handleInputChange}
+          />
         </div>
 
-        {/* <!-- Input --> */}
+        {/* Skills */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Email Address</label>
-          <input type="text" name="name" placeholder="" />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Username</label>
-          <input type="text" name="name" placeholder="" />
-        </div>
-
-        {/* <!-- Search Select --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Specialisms </label>
+          <label>Skills</label>
           <Select
-            defaultValue={[specialisms[2]]}
+            defaultValue={[skills[2]]}
             isMulti
-            name="colors"
-            options={specialisms}
+            name="specialisms"
+            options={skills}
             className="basic-multi-select"
             classNamePrefix="select"
           />
         </div>
 
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Job Type</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Offered Salary</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>$1500</option>
-            <option>$2000</option>
-            <option>$2500</option>
-            <option>$3500</option>
-            <option>$4500</option>
-            <option>$5000</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Career Level</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Experience</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Gender</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Industry</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Qualification</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Application Deadline Date</label>
-          <input type="text" name="name" placeholder="06.04.2020" />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Country</label>
-          <select className="chosen-single form-select">
-            <option>Australia</option>
-            <option>Pakistan</option>
-            <option>Chaina</option>
-            <option>Japan</option>
-            <option>India</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>City</label>
-          <select className="chosen-single form-select">
-            <option>Melbourne</option>
-            <option>Pakistan</option>
-            <option>Chaina</option>
-            <option>Japan</option>
-            <option>India</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Complete Address</label>
+        {/* Experience Level */}
+        <div className="form-group col-lg-6 col-md-12" ref={experienceLevelRef}>
+          <label>Experience Level</label>
           <input
             type="text"
-            name="name"
-            placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia."
+            name="experienceLevel"
+            placeholder="How long does it take for a candidate to acquire the required skills?"
+            value={formValues.experienceLevel}
+            onChange={handleInputChange}
           />
         </div>
 
-        {/* <!-- Input --> */}
+        {/* Category */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Find On Map</label>
+          <label>Category</label>
+          <select name="category" className="chosen-single form-select">
+            <option>Select</option>
+            <option>Banking</option>
+            <option>Digital & Creative</option>
+            <option>Retail</option>
+            <option>Human Resources</option>
+            <option>Management</option>
+          </select>
+        </div>
+
+        {/* Type */}
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Type</label>
+          <select name="type" className="chosen-single form-select">
+            <option>Select</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Temporary</option>
+            <option>Freelance</option>
+            <option>Internship</option>
+          </select>
+        </div>
+
+        {/* Min Salary */}
+        <div className="form-group col-lg-6 col-md-12" ref={minSalaryRef}>
+          <label>Min Salary</label>
           <input
             type="text"
-            name="name"
-            placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia."
+            name="minSalary"
+            placeholder="Min Salary"
+            value={formValues.minSalary}
+            onChange={handleInputChange}
           />
         </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-3 col-md-12">
-          <label>Latitude</label>
-          <input type="text" name="name" placeholder="Melbourne" />
+        {/* Max Salary */}
+        <div className="form-group col-lg-6 col-md-12" ref={maxSalaryRef}>
+          <label>Max Salary</label>
+          <input
+            type="text"
+            name="maxSalary"
+            placeholder="Max Salary"
+            value={formValues.maxSalary}
+            onChange={handleInputChange}
+          />
         </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-3 col-md-12">
-          <label>Longitude</label>
-          <input type="text" name="name" placeholder="Melbourne" />
+        {/* Education Level */}
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Education Level</label>
+          <select name="education" className="chosen-single form-select">
+            <option>Select</option>
+            <option>Doctorate / PhD</option>
+            <option>Master's Degree</option>
+            <option>Bachelor's Degree</option>
+            <option>Associate Degree</option>
+            <option>High School Diploma</option>
+            <option>Secondary School Certificate</option>
+            <option>Some High School / No Diploma</option>
+          </select>
         </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <button className="theme-btn btn-style-three">Search Location</button>
+        {/* Location */}
+        <div className="form-group col-lg-12 col-md-12" ref={locationRef}>
+          <label>Location</label>
+          <input
+            type="text"
+            name="location"
+            placeholder="Please enter the address."
+            value={formValues.location}
+            onChange={handleInputChange}
+          />
         </div>
 
-        <div className="form-group col-lg-12 col-md-12">
-          <div className="map-outer">
-            <div style={{ height: "420px", width: "100%" }}>
-              <Map />
-            </div>
-          </div>
-        </div>
-
-        {/* <!-- Input --> */}
+        {/* Submit Button */}
         <div className="form-group col-lg-12 col-md-12 text-right">
-          <button className="theme-btn btn-style-one">Next</button>
+          <button className="theme-btn btn-style-one" type="submit">
+            Submit
+          </button>
         </div>
       </div>
     </form>

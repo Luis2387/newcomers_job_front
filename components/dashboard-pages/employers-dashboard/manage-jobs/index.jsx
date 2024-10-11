@@ -3,7 +3,7 @@ import DashboardHeader from "../../../header/DashboardHeader";
 import Login from "../../../common/form/login/Login";
 import DashboardEmployerSidebar from "../../../header/DashboardEmployerSidebar";
 import BreadCrumb from "../../BreadCrumb";
-import PostBoxForm from "./components/PostBoxForm";
+import JobListingsTable from "./components/JobListingsTable";
 import MenuToggler from "../../MenuToggler";
 
 const index = () => {
@@ -27,7 +27,7 @@ const index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="Post a New Job!" />
+          <BreadCrumb title="Manage jobs!" />
           {/* breadCrumb */}
 
           <MenuToggler />
@@ -37,17 +37,7 @@ const index = () => {
             <div className="col-lg-12">
               {/* <!-- Ls widget --> */}
               <div className="ls-widget">
-                <div className="tabs-box">
-                  <div className="widget-title">
-                    <h4>Post Job</h4>
-                  </div>
-
-                  <div className="widget-content">
-                
-                    <PostBoxForm />
-                    {/* End post box form */}
-                  </div>
-                </div>
+                <JobListingsTable />
               </div>
             </div>
           </div>
@@ -56,6 +46,8 @@ const index = () => {
         {/* End dashboard-outer */}
       </section>
       {/* <!-- End Dashboard --> */}
+
+      {/* <!-- End Copyright --> */}
     </div>
     // End page-wrapper
   );
