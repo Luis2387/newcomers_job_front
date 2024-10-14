@@ -35,10 +35,14 @@ const PostBoxForm = () => {
   // Check if the value is a positive number on blur
   const handleBlur = (e) => {
     const { name, value } = e.target;
-    
+
     // Check if it's a positive number
     if (isNaN(value) || Number(value) <= 0) {
-      alert(`${name === "minSalary" ? "Min" : "Max"} Salary must be a positive number.`);
+      alert(
+        `${
+          name === "minSalary" ? "Min" : "Max"
+        } Salary must be a positive number.`
+      );
       setFormValues({ ...formValues, [name]: "" }); // Clear the field
     }
   };
@@ -47,14 +51,22 @@ const PostBoxForm = () => {
     e.preventDefault();
 
     // Check if minSalary is a positive number
-    if (!formValues.minSalary || isNaN(formValues.minSalary) || Number(formValues.minSalary) <= 0) {
+    if (
+      !formValues.minSalary ||
+      isNaN(formValues.minSalary) ||
+      Number(formValues.minSalary) <= 0
+    ) {
       alert("Min Salary must be a positive number");
       minSalaryRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
     // Check if maxSalary is a positive number
-    if (!formValues.maxSalary || isNaN(formValues.maxSalary) || Number(formValues.maxSalary) <= 0) {
+    if (
+      !formValues.maxSalary ||
+      isNaN(formValues.maxSalary) ||
+      Number(formValues.maxSalary) <= 0
+    ) {
       alert("Max Salary must be a positive number");
       maxSalaryRef.current.scrollIntoView({ behavior: "smooth" });
       return;
@@ -82,7 +94,11 @@ const PostBoxForm = () => {
         {/* Job Description */}
         <div className="form-group col-lg-12 col-md-12">
           <label>Job Description</label>
-          <textarea name="jobDescription" placeholder="Please enter job description" required />
+          <textarea
+            name="jobDescription"
+            placeholder="Please enter job description"
+            required
+          />
         </div>
 
         {/* Skills */}
@@ -101,13 +117,22 @@ const PostBoxForm = () => {
         {/* Experience Level */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Experience Level</label>
-          <input type="text" name="experienceLevel" placeholder="How long does it take for a candidate to acquire the required skills?" required />
+          <input
+            type="text"
+            name="experienceLevel"
+            placeholder="How long does it take for a candidate to acquire the required skills?"
+            required
+          />
         </div>
 
         {/* Category */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Category</label>
-          <select name="category" className="chosen-single form-select" required>
+          <select
+            name="category"
+            className="chosen-single form-select"
+            required
+          >
             <option value="">Select</option>
             <option>Banking</option>
             <option>Digital & Creative</option>
@@ -161,7 +186,11 @@ const PostBoxForm = () => {
         {/* Education Level */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Education Level</label>
-          <select name="education" className="chosen-single form-select" required>
+          <select
+            name="education"
+            className="chosen-single form-select"
+            required
+          >
             <option value="">Select</option>
             <option>Doctorate / PhD</option>
             <option>Master's Degree</option>
@@ -176,7 +205,12 @@ const PostBoxForm = () => {
         {/* Location */}
         <div className="form-group col-lg-12 col-md-12">
           <label>Location</label>
-          <input type="text" name="location" placeholder="Please enter the address." required />
+          <input
+            type="text"
+            name="location"
+            placeholder="Please enter the address."
+            required
+          />
         </div>
 
         {/* Submit Button */}
