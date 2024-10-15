@@ -31,12 +31,12 @@ const Index = () => {
           <BreadCrumb title="Company's name" />
           {/* breadCrumb */}
 
-          <MenuToggler />
+          {/* <MenuToggler /> */}
           {/* Collapsible sidebar button */}
 
-          <div className="row">
+          {/* <div className="row">
             <TopCardBlock posted="10" applicants="20" hired="5"/>
-          </div>
+          </div> */}
           {/* End .row top card block */}
 
           <div className="row">
@@ -53,17 +53,7 @@ const Index = () => {
             </div>
             {/* End .col */}
 
-            <div className="col-xl-6 col-lg-12">
-              {/* <!-- Notification Widget --> */}
-              <div className="notification-widget ls-widget">
-                <div className="widget-title">
-                  <h4>Notifications</h4>
-                </div>
-                <div className="widget-content">
-                  <Notification />
-                </div>
-              </div>
-            </div>
+            
             {/* End .col */}
 
             {/* End .col */}
