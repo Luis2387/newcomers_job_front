@@ -1,44 +1,54 @@
+"use client";
+
 const SocialNetworkBox = () => {
+  // Handle form submission
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    alert("Form submitted successfully!");
+  };
+
   return (
-    <form className="default-form">
-      <div className="row">
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Facebook</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="www.facebook.com/Invision"
-            required
-          />
-        </div>
+    <div>
+      <form className="default-form" onSubmit={handleSubmit}>
+        <div className="row">
+          {/* Facebook Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>Facebook</label>
+            <input
+              type="text"
+              name="facebook"
+              placeholder="www.facebook.com/Invision"
+            />
+          </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Twitter</label>
-          <input type="text" name="name" placeholder="" required />
-        </div>
+          {/* Twitter Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>Twitter</label>
+            <input type="text" name="twitter" placeholder="" />
+          </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Linkedin</label>
-          <input type="text" name="name" placeholder="" required />
-        </div>
+          {/* LinkedIn Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>LinkedIn</label>
+            <input type="text" name="linkedin" placeholder="" />
+          </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Google Plus</label>
-          <input type="text" name="name" placeholder="" required />
-        </div>
+          {/* Google Plus Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>Google Plus</label>
+            <input type="text" name="googlePlus" placeholder="" />
+          </div>
 
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <button type="submit" className="theme-btn btn-style-one">
-            Save
-          </button>
+          {/* Submit Button */}
+          <div className="form-group col-lg-6 col-md-12">
+            <button type="submit" className="theme-btn btn-style-one">
+              Save
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
