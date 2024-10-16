@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import HeaderNavContent from "../../components/header/HeaderNavContent";
 import Image from "next/image";
 
 const Header = () => {
@@ -37,8 +38,8 @@ const Header = () => {
                   <Image
                     width={154}
                     height={50}
-                    src="/images/logo_new.svg"
-                    alt="logo"
+                    src="/images/logo-dark-blue.svg"
+                    alt="brand"
                   />
                 </Link>
               </div>
@@ -48,7 +49,7 @@ const Header = () => {
           {/* End .nav-outer */}
 
           <div className="outer-box">
-            
+            <HeaderNavContent />
             {/* <!-- Main Menu End--> */}
 
             {/* <!-- Login/Register --> */}
