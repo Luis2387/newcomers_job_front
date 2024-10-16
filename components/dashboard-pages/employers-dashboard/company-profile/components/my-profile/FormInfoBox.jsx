@@ -84,6 +84,34 @@ const FormInfoBox = () => {
             </select>
           </div>
 
+          {/* Facebook Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>Facebook</label>
+            <input
+              type="text"
+              name="facebook"
+              placeholder="www.facebook.com/Invision"
+            />
+          </div>
+
+          {/* Twitter Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>Twitter</label>
+            <input type="text" name="twitter" placeholder="" />
+          </div>
+
+          {/* LinkedIn Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>LinkedIn</label>
+            <input type="text" name="linkedin" placeholder="" />
+          </div>
+
+          {/* Google Plus Input */}
+          <div className="form-group col-lg-6 col-md-12">
+            <label>Tiktok</label>
+            <input type="text" name="googlePlus" placeholder="" />
+          </div>
+
           {/* <!-- About Company --> */}
           <div className="form-group col-lg-12 col-md-12">
             <label>About Company</label>

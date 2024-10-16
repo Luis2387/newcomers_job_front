@@ -1,6 +1,5 @@
 "use client";
 
-import Map from "../../../Map";
 import Select from "react-select";
 import { useState, useRef } from "react";
 
@@ -28,23 +27,7 @@ const PostBoxForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Update input values without immediate validation
     setFormValues({ ...formValues, [name]: value });
-  };
-
-  // Check if the value is a positive number on blur
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-
-    // Check if it's a positive number
-    if (isNaN(value) || Number(value) <= 0) {
-      alert(
-        `${
-          name === "minSalary" ? "Min" : "Max"
-        } Salary must be a positive number.`
-      );
-      setFormValues({ ...formValues, [name]: "" }); // Clear the field
-    }
   };
 
   const handleSubmit = (e) => {
@@ -88,7 +71,12 @@ const PostBoxForm = () => {
         {/* Job Title */}
         <div className="form-group col-lg-12 col-md-12">
           <label>Job Title</label>
-          <input type="text" name="jobTitle" placeholder="Title" required />
+          <input
+            type="text"
+            name="jobTitle"
+            placeholder="Title"
+            required
+          />
         </div>
 
         {/* Job Description */}
@@ -164,7 +152,6 @@ const PostBoxForm = () => {
             placeholder="Min Salary"
             value={formValues.minSalary}
             onChange={handleInputChange}
-            onBlur={handleBlur} // Check when input loses focus
             required
           />
         </div>
@@ -178,7 +165,6 @@ const PostBoxForm = () => {
             placeholder="Max Salary"
             value={formValues.maxSalary}
             onChange={handleInputChange}
-            onBlur={handleBlur} // Check when input loses focus
             required
           />
         </div>
