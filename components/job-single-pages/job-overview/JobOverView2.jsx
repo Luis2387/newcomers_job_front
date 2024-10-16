@@ -14,7 +14,7 @@ const JobOverView2 = () => {
       <li>
         <i className="icon icon-location"></i>
         <h5>Location:</h5>
-        <span>London, UK</span>
+        <span>London, Ontario</span>
       </li>
       <li>
         <i className="icon icon-user-2"></i>
@@ -34,7 +34,7 @@ const JobOverView2 = () => {
       <li>
         <i className="icon icon-salary"></i>
         <h5>Salary:</h5>
-        <span>$35k - $45k</span>
+        <span>$55k - $65k</span>
       </li>
     </ul>
   );
