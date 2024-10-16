@@ -3,8 +3,9 @@ import DashboardHeader from "../../../header/DashboardHeader";
 import Login from "../../../common/form/login/Login";
 import DashboardEmployerSidebar from "../../../header/DashboardEmployerSidebar";
 import BreadCrumb from "../../BreadCrumb";
-import JobListingsTable from "./components/JobListingsTable";
 import MenuToggler from "../../MenuToggler";
+import JobListingsTable from "./components/JobListingsTable";
+
 
 const index = () => {
   return (
@@ -27,7 +28,7 @@ const index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="Manage jobs!" />
+          <BreadCrumb title="Manage jobs" />
           {/* breadCrumb */}
 
           <MenuToggler />

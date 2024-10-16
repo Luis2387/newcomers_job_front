@@ -1,85 +1,110 @@
 "use client";
 
-import Map from "../../../Map";
 import Select from "react-select";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import JobService from '@/services/JobService';
 
 const PostBoxForm = () => {
-  // Manage form values
   const [formValues, setFormValues] = useState({
+    jobTitle: "",
+    jobDescription: "",
+    experienceLevel: "",
+    category: "",
+    type: "",
     minSalary: "",
     maxSalary: "",
+    education: "",
+    location: "",
+    skills: [],
   });
 
-  // Create refs for salary fields
+  const [skillsOptions, setSkillsOptions] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [jobTypeOptions, setJobTypeOptions] = useState([]);
+  const [educationLevelOptions, setEducationLevelOptions] = useState([]);
   const minSalaryRef = useRef(null);
   const maxSalaryRef = useRef(null);
 
-  const skills = [
-    { value: "Banking", label: "Banking" },
-    { value: "Digital & Creative", label: "Digital & Creative" },
-    { value: "Retail", label: "Retail" },
-    { value: "Human Resources", label: "Human Resources" },
-    { value: "Management", label: "Management" },
-    { value: "Accounting & Finance", label: "Accounting & Finance" },
-    { value: "Digital", label: "Digital" },
-    { value: "Creative Art", label: "Creative Art" },
-  ];
+  // Fetching options for select inputs
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const skills = await JobService.getSkills();
+        const categories = await JobService.getCategories();
+        const jobTypes = await JobService.getJobTypes();
+        const educationLevels = await JobService.getEducationLevels();
+
+        setSkillsOptions(skills.map(skill => ({ value: skill.id, label: skill.name })));
+        setCategoryOptions(categories.map(category => ({ value: category.id, label: category.name })));
+        setJobTypeOptions(jobTypes.map(jobType => ({ value: jobType.id, label: jobType.name })));
+        setEducationLevelOptions(educationLevels.map(level => ({ value: level.id, label: level.name })));
+      } catch (error) {
+        console.error("Error fetching options:", error);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Update input values without immediate validation
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // Check if the value is a positive number on blur
+  const handleSkillsChange = (selectedOptions) => {
+    const skills = selectedOptions.map(option => option.value);
+    setFormValues({ ...formValues, skills });
+  };
+
   const handleBlur = (e) => {
     const { name, value } = e.target;
-
-    // Check if it's a positive number
     if (isNaN(value) || Number(value) <= 0) {
-      alert(
-        `${
-          name === "minSalary" ? "Min" : "Max"
-        } Salary must be a positive number.`
-      );
-      setFormValues({ ...formValues, [name]: "" }); // Clear the field
+      alert(`${name === "minSalary" ? "Min" : "Max"} Salary must be a positive number.`);
+      setFormValues({ ...formValues, [name]: "" });
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if minSalary is a positive number
-    if (
-      !formValues.minSalary ||
-      isNaN(formValues.minSalary) ||
-      Number(formValues.minSalary) <= 0
-    ) {
-      alert("Min Salary must be a positive number");
+    if (!formValues.minSalary || isNaN(formValues.minSalary) || Number(formValues.minSalary) <= 0) {
+      alert("Min Salary must be a positive number.");
       minSalaryRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    // Check if maxSalary is a positive number
-    if (
-      !formValues.maxSalary ||
-      isNaN(formValues.maxSalary) ||
-      Number(formValues.maxSalary) <= 0
-    ) {
-      alert("Max Salary must be a positive number");
+    if (!formValues.maxSalary || isNaN(formValues.maxSalary) || Number(formValues.maxSalary) <= 0) {
+      alert("Max Salary must be a positive number.");
       maxSalaryRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    // Ensure maxSalary is greater than or equal to minSalary
     if (Number(formValues.maxSalary) < Number(formValues.minSalary)) {
-      alert("Max Salary should be greater than or equal to Min Salary");
+      alert("Max Salary must be greater than or equal to Min Salary.");
       maxSalaryRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    alert("Form submitted successfully!");
+    const jobData = {
+      title: formValues.jobTitle,
+      description: formValues.jobDescription,
+      experience_level: formValues.experienceLevel,
+      min_salary: formValues.minSalary,
+      max_salary: formValues.maxSalary,
+      location: formValues.location,
+      job_type: formValues.type,
+      category: formValues.category,
+      education_level: formValues.education,
+      skills: formValues.skills,
+    };
+
+    try {
+      await JobService.createJob(jobData);
+      alert("Job created successfully");
+    } catch (error) {
+      console.error("Error creating job:", error);
+      alert("Error creating job.");
+    }
   };
 
   return (
@@ -88,7 +113,14 @@ const PostBoxForm = () => {
         {/* Job Title */}
         <div className="form-group col-lg-12 col-md-12">
           <label>Job Title</label>
-          <input type="text" name="jobTitle" placeholder="Title" required />
+          <input
+            type="text"
+            name="jobTitle"
+            placeholder="Title"
+            value={formValues.jobTitle}
+            onChange={handleInputChange}
+            required
+          />
         </div>
 
         {/* Job Description */}
@@ -97,6 +129,8 @@ const PostBoxForm = () => {
           <textarea
             name="jobDescription"
             placeholder="Please enter job description"
+            value={formValues.jobDescription}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -105,12 +139,13 @@ const PostBoxForm = () => {
         <div className="form-group col-lg-6 col-md-12">
           <label>Skills</label>
           <Select
-            defaultValue={[skills[1]]}
             isMulti
-            name="specialisms"
-            options={skills}
+            name="skills"
+            options={skillsOptions}
+            onChange={handleSkillsChange}
             className="basic-multi-select"
             classNamePrefix="select"
+            required
           />
         </div>
 
@@ -120,7 +155,9 @@ const PostBoxForm = () => {
           <input
             type="text"
             name="experienceLevel"
-            placeholder="How long does it take for a candidate to acquire the required skills?"
+            placeholder="Experience level required"
+            value={formValues.experienceLevel}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -130,28 +167,36 @@ const PostBoxForm = () => {
           <label>Category</label>
           <select
             name="category"
-            className="chosen-single form-select"
+            value={formValues.category}
+            onChange={handleInputChange}
+            className="form-select"
             required
           >
             <option value="">Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
+            {categoryOptions.map(category => (
+              <option key={category.value} value={category.value}>
+                {category.label}
+              </option>
+            ))}
           </select>
         </div>
 
-        {/* Type */}
+        {/* Job Type */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Type</label>
-          <select name="type" className="chosen-single form-select" required>
+          <label>Job Type</label>
+          <select
+            name="type"
+            value={formValues.type}
+            onChange={handleInputChange}
+            className="form-select"
+            required
+          >
             <option value="">Select</option>
-            <option>Full-time</option>
-            <option>Part-time</option>
-            <option>Temporary</option>
-            <option>Freelance</option>
-            <option>Internship</option>
+            {jobTypeOptions.map(jobType => (
+              <option key={jobType.value} value={jobType.value}>
+                {jobType.label}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -164,7 +209,7 @@ const PostBoxForm = () => {
             placeholder="Min Salary"
             value={formValues.minSalary}
             onChange={handleInputChange}
-            onBlur={handleBlur} // Check when input loses focus
+            onBlur={handleBlur}
             required
           />
         </div>
@@ -178,7 +223,7 @@ const PostBoxForm = () => {
             placeholder="Max Salary"
             value={formValues.maxSalary}
             onChange={handleInputChange}
-            onBlur={handleBlur} // Check when input loses focus
+            onBlur={handleBlur}
             required
           />
         </div>
@@ -188,17 +233,17 @@ const PostBoxForm = () => {
           <label>Education Level</label>
           <select
             name="education"
-            className="chosen-single form-select"
+            value={formValues.education}
+            onChange={handleInputChange}
+            className="form-select"
             required
           >
             <option value="">Select</option>
-            <option>Doctorate / PhD</option>
-            <option>Master's Degree</option>
-            <option>Bachelor's Degree</option>
-            <option>Associate Degree</option>
-            <option>High School Diploma</option>
-            <option>Secondary School Certificate</option>
-            <option>Some High School / No Diploma</option>
+            {educationLevelOptions.map(level => (
+              <option key={level.value} value={level.value}>
+                {level.label}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -208,7 +253,9 @@ const PostBoxForm = () => {
           <input
             type="text"
             name="location"
-            placeholder="Please enter the address."
+            placeholder="Please enter the address/city/country"
+            value={formValues.location}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -225,3 +272,4 @@ const PostBoxForm = () => {
 };
 
 export default PostBoxForm;
+
