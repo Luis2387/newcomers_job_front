@@ -3,8 +3,11 @@
 import Select from "react-select";
 import { useState, useRef, useEffect } from "react";
 import JobService from '@/services/JobService';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const PostBoxForm = () => {
+  const router = useRouter(); 
   const [formValues, setFormValues] = useState({
     jobTitle: "",
     jobDescription: "",
@@ -101,6 +104,7 @@ const PostBoxForm = () => {
     try {
       await JobService.createJob(jobData);
       alert("Job created successfully");
+      router.push('/employers-dashboard/manage-jobs'); 
     } catch (error) {
       console.error("Error creating job:", error);
       alert("Error creating job.");

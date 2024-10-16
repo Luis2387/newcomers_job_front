@@ -68,9 +68,9 @@ const DashboardHeader = () => {
                                 aria-expanded="false"
                             >
                                 <Image
-                                    alt="avatar"
+                                    alt="logo"
                                     className="thumb"
-                                    src="/images/resource/company-6.png"
+                                    src=""
                                     width={50}
                                     height={50}
                                 />

@@ -1,4 +1,3 @@
-import FooterDefault from "../../../components/footer/common-footer";
 import Login from "../../common/form/login/Login";
 import DefaulHeader2 from "../../header/DefaulHeader2";
 import MobileMenu from "../../header/MobileMenu";
@@ -62,9 +61,6 @@ const index = () => {
         {/* End container */}
       </section>
       {/* <!--End Listing Page Section --> */}
-
-      <FooterDefault footerStyle="alternate5" />
-      {/* <!-- End Main Footer --> */}
     </>
   );
 };
