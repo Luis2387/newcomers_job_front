@@ -106,7 +106,7 @@ const FormInfoBox = () => {
             <input type="text" name="linkedin" placeholder="" />
           </div>
 
-          {/* Google Plus Input */}
+          {/* Tiktok Input */}
           <div className="form-group col-lg-6 col-md-12">
             <label>Tiktok</label>
             <input type="text" name="googlePlus" placeholder="" />

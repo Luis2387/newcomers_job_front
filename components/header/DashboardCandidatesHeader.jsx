@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import employerProfileMenuData from "../../data/employerProfileMenuData";
+import candidatesMenuData from "../../data/candidatesMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
+
 import { usePathname } from "next/navigation";
-
-
-const DashboardHeader = () => {
+const DashboardCandidatesHeader = () => {
     const [navbar, setNavbar] = useState(false);
 
 
@@ -52,14 +51,12 @@ const DashboardHeader = () => {
                         </div>
                         {/* End .logo-box */}
 
-                       
                         {/* <!-- Main Menu End--> */}
                     </div>
                     {/* End .nav-outer */}
 
-                    <div className="outer-box">                        
+                    <div className="outer-box">
 
-                        {/* <!-- Dashboard Option --> */}
                         <div className="dropdown dashboard-option">
                             <a
                                 className="dropdown-toggle"
@@ -68,9 +65,9 @@ const DashboardHeader = () => {
                                 aria-expanded="false"
                             >
                                 {/* <Image
-                                    alt="logo"
+                                    alt="avatar"
                                     className="thumb"
-                                    src=""
+                                    src="/images/resource/candidate-1.png"
                                     width={50}
                                     height={50}
                                 /> */}
@@ -78,7 +75,7 @@ const DashboardHeader = () => {
                             </a>
 
                             <ul className="dropdown-menu">
-                                {employerProfileMenuData.map((item) => (
+                                {candidatesMenuData.map((item) => (
                                     <li
                                         className={`${
                                             isActiveLink(
@@ -109,4 +106,4 @@ const DashboardHeader = () => {
     );
 };
 
-export default DashboardHeader;
+export default DashboardCandidatesHeader;
