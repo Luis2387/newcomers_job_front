@@ -1,5 +1,4 @@
-
-'use client'
+"use client";
 
 import Select from "react-select";
 
@@ -35,7 +34,7 @@ const FormInfoBox = () => {
           <input
             type="text"
             name="name"
-            placeholder="creativelayers"
+            placeholder="Please enter your E-mail."
             required
           />
         </div>
@@ -46,96 +45,49 @@ const FormInfoBox = () => {
           <input
             type="text"
             name="name"
-            placeholder="www.jerome.com"
+            placeholder="Please enter your website."
             required
           />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Experience</label>
-          <input type="text" name="name" placeholder="5 Years" required />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Age</label>
+          <label>Location</label>
           <input
             type="text"
             name="name"
-            placeholder="27"
+            placeholder="Please enter your address."
             required
           />
         </div>
 
-        {/* <!-- Input --> */}
+        {/* Facebook Input */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Education Levels</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>PhD</option>
-            <option>Master's Degree</option>
-            <option>Bachelor's Degree</option>
-            <option>Associate's Degree</option>
-            <option>High School</option>
-            <option>Middle School</option>
-          </select>
-        </div>
-        
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Languages</label>
+          <label>Facebook</label>
           <input
             type="text"
-            name="name"
-            placeholder="English, Turkish"
-            required
+            name="facebook"
+            placeholder="www.facebook.com/Invision"
           />
         </div>
 
-        {/* <!-- Search Select --> */}
+        {/* Twitter Input */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Categories </label>
-          <Select
-            defaultValue={[catOptions[1]]}
-            isMulti
-            name="colors"
-            options={catOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            required
-          />
+          <label>Twitter</label>
+          <input type="text" name="twitter" placeholder="" />
         </div>
 
-          {/* Facebook Input */}
-          <div className="form-group col-lg-6 col-md-12">
-            <label>Facebook</label>
-            <input
-              type="text"
-              name="facebook"
-              placeholder="www.facebook.com/Invision"
-            />
-          </div>
+        {/* LinkedIn Input */}
+        <div className="form-group col-lg-6 col-md-12">
+          <label>LinkedIn</label>
+          <input type="text" name="linkedin" placeholder="" />
+        </div>
 
-          {/* Twitter Input */}
-          <div className="form-group col-lg-6 col-md-12">
-            <label>Twitter</label>
-            <input type="text" name="twitter" placeholder="" />
-          </div>
-
-          {/* LinkedIn Input */}
-          <div className="form-group col-lg-6 col-md-12">
-            <label>LinkedIn</label>
-            <input type="text" name="linkedin" placeholder="" />
-          </div>
-
-          {/* Tiktok Input */}
-          <div className="form-group col-lg-6 col-md-12">
-            <label>Tiktok</label>
-            <input type="text" name="googlePlus" placeholder="" />
-          </div>
-
+        {/* Tiktok Input */}
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Tiktok</label>
+          <input type="text" name="googlePlus" placeholder="" />
+        </div>
 
         {/* <!-- About Company --> */}
         <div className="form-group col-lg-12 col-md-12">
