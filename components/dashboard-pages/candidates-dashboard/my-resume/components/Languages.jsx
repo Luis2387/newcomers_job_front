@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 
-const Experiences = () => {
-  const [experiences, setExperiences] = useState([]);
+const Languages = () => {
+  const [languages, setLanguages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
-    company: "",
-    position: "",
-    startDate: "",
-    endDate: "",
+    language: "",
+    proficiency: "",
   });
 
   const openModal = (index = null) => {
     setEditingIndex(index);
     if (index !== null) {
-      setFormData(experiences[index]);
+      setFormData(languages[index]);
     } else {
-      setFormData({ company: "", position: "", startDate: "", endDate: "" });
+      setFormData({ language: "", proficiency: "" });
     }
     setIsModalOpen(true);
   };
 
-  const saveExperience = () => {
+  const saveLanguage = () => {
     if (editingIndex === null) {
-      setExperiences([...experiences, formData]);
+      setLanguages([...languages, formData]);
     } else {
-      const updatedExperiences = experiences.map((exp, i) =>
-        i === editingIndex ? formData : exp
+      const updatedLanguages = languages.map((lang, i) =>
+        i === editingIndex ? formData : lang
       );
-      setExperiences(updatedExperiences);
+      setLanguages(updatedLanguages);
     }
     setIsModalOpen(false);
   };
@@ -113,32 +111,24 @@ const Experiences = () => {
 
   return (
     <div>
-      {experiences.map((experience, index) => (
+      {languages.map((language, index) => (
         <div
           key={index}
           style={styles.entry}
           onClick={() => openModal(index)}
         >
           <div style={styles.item}>
-            <span style={styles.label}>Company:</span>
-            <span style={styles.value}>{experience.company}</span>
+            <span style={styles.label}>Language:</span>
+            <span style={styles.value}>{language.language}</span>
           </div>
           <div style={styles.item}>
-            <span style={styles.label}>Position:</span>
-            <span style={styles.value}>{experience.position}</span>
-          </div>
-          <div style={styles.item}>
-            <span style={styles.label}>Start Date:</span>
-            <span style={styles.value}>{experience.startDate}</span>
-          </div>
-          <div style={styles.item}>
-            <span style={styles.label}>End Date:</span>
-            <span style={styles.value}>{experience.endDate}</span>
+            <span style={styles.label}>Proficiency:</span>
+            <span style={styles.value}>{language.proficiency}</span>
           </div>
         </div>
       ))}
       <button style={styles.addButton} onClick={() => openModal()}>
-        Add Experience
+        Add Language
       </button>
 
       {isModalOpen && (
@@ -146,33 +136,19 @@ const Experiences = () => {
           <div style={styles.modalContent}>
             <input
               type="text"
-              placeholder="Company"
+              placeholder="Language"
               style={styles.inputField}
-              value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              value={formData.language}
+              onChange={(e) => setFormData({ ...formData, language: e.target.value })}
             />
             <input
               type="text"
-              placeholder="Position"
+              placeholder="Proficiency"
               style={styles.inputField}
-              value={formData.position}
-              onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+              value={formData.proficiency}
+              onChange={(e) => setFormData({ ...formData, proficiency: e.target.value })}
             />
-            <input
-              type="text"
-              placeholder="Start Date"
-              style={styles.inputField}
-              value={formData.startDate}
-              onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="End Date"
-              style={styles.inputField}
-              value={formData.endDate}
-              onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-            />
-            <button type="button" style={styles.saveButton} onClick={saveExperience}>
+            <button type="button" style={styles.saveButton} onClick={saveLanguage}>
               Save
             </button>
             <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
@@ -185,4 +161,5 @@ const Experiences = () => {
   );
 };
 
-export default Experiences;
+export default Languages;
+
