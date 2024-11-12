@@ -3,11 +3,13 @@
 import Select from "react-select";
 import { useState, useRef, useEffect } from "react";
 import JobService from '@/services/JobService';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const PostBoxForm = () => {
-  const router = useRouter(); 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id'); 
   const [formValues, setFormValues] = useState({
     jobTitle: "",
     jobDescription: "",
@@ -37,17 +39,40 @@ const PostBoxForm = () => {
         const jobTypes = await JobService.getJobTypes();
         const educationLevels = await JobService.getEducationLevels();
 
-        setSkillsOptions(skills.map(skill => ({ value: skill.id, label: skill.name })));
+        const formattedSkills = skills?.map(skill => ({ value: skill.id, label: skill.name })) || [];
+        setSkillsOptions(formattedSkills);
         setCategoryOptions(categories.map(category => ({ value: category.id, label: category.name })));
         setJobTypeOptions(jobTypes.map(jobType => ({ value: jobType.id, label: jobType.name })));
         setEducationLevelOptions(educationLevels.map(level => ({ value: level.id, label: level.name })));
+      
+        if (id && !isNaN(id)) {
+          const jobData = await JobService.getJob(id);
+
+          const selectedSkills = jobData.skills?.map(skillId =>
+            formattedSkills.find(skill => skill.value === skillId)
+          ).filter(skill => skill !== undefined) || [];
+
+          setFormValues({
+            jobTitle: jobData.title || "",
+            jobDescription: jobData.description || "",
+            experienceLevel: jobData.experience_level || "",
+            category: jobData.category || "",
+            type: jobData.job_type || "",
+            minSalary: jobData.min_salary || "",
+            maxSalary: jobData.max_salary || "",
+            education: jobData.education_level || "",
+            location: jobData.location || "",
+            skills: selectedSkills,
+          });
+        }
+
       } catch (error) {
         console.error("Error fetching options:", error);
       }
     };
 
     fetchData();
-  }, []); 
+  }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,8 +80,10 @@ const PostBoxForm = () => {
   };
 
   const handleSkillsChange = (selectedOptions) => {
-    const skills = selectedOptions.map(option => option.value);
-    setFormValues({ ...formValues, skills });
+    setFormValues({ 
+      ...formValues, 
+      skills: selectedOptions || []
+    });
   };
 
   const handleBlur = (e) => {
@@ -98,16 +125,23 @@ const PostBoxForm = () => {
       job_type: formValues.type,
       category: formValues.category,
       education_level: formValues.education,
-      skills: formValues.skills,
+      skills: formValues.skills.map(skill => skill.value),
     };
 
     try {
-      await JobService.createJob(jobData);
-      alert("Job created successfully");
+      if (id) {
+        
+        await JobService.updateJob(id, jobData);
+        alert("Job updated successfully");
+      } else {
+      
+        await JobService.createJob(jobData);
+        alert("Job created successfully");
+      }
       router.push('/employers-dashboard/manage-jobs'); 
     } catch (error) {
-      console.error("Error creating job:", error);
-      alert("Error creating job.");
+      console.error("Error submitting job:", error);
+      alert("Error submitting job.");
     }
   };
 
@@ -146,6 +180,7 @@ const PostBoxForm = () => {
             isMulti
             name="skills"
             options={skillsOptions}
+            value={formValues.skills} 
             onChange={handleSkillsChange}
             className="basic-multi-select"
             classNamePrefix="select"
@@ -267,7 +302,7 @@ const PostBoxForm = () => {
         {/* Submit Button */}
         <div className="form-group col-lg-12 col-md-12 text-right">
           <button className="theme-btn btn-style-one" type="submit">
-            Submit
+            {id ? 'Update Job' : 'Submit'}
           </button>
         </div>
       </div>

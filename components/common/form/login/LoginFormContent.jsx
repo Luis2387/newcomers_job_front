@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import authService from '../../../../services/authService';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 const FormContent = () => {
@@ -30,11 +31,16 @@ const FormContent = () => {
 
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
+      Cookies.set('access_token', access, { path: '/' });
 
       document.querySelector('body > div.modal-backdrop.fade.show').style.display = 'none';
+      document.body.style.overflow = 'auto';
 
       const profile = await authService.userTypeProfile(access);
       const userType = profile.user_type;
+
+      localStorage.setItem('user_type', userType);
+      Cookies.set('user_type', userType, { expires: 1 });
 
       if (userType === 'employer') {
         router.push('/employers-dashboard/dashboard');

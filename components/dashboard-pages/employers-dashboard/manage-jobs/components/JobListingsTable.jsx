@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import JobService from '@/services/JobService';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const JobListingsTable = () => {
   const [jobs, setJobs] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -32,6 +34,10 @@ const JobListingsTable = () => {
         alert("Failed to delete job.");
       }
     }
+  };
+
+  const handleEditJob = (jobId) => {
+    router.push(`/employers-dashboard/post-jobs?id=${jobId}`);
   };
 
   return (
@@ -67,15 +73,8 @@ const JobListingsTable = () => {
                     <td>
                       <div className="job-block">
                         <div className="inner-box">
-                          <div className="content">
-                            <span className="company-logo">
-                              <Image
-                                width={50}
-                                height={49}
-                                src={job.logo || "/default-logo.png"}
-                                alt="logo"
-                              />
-                            </span>
+                          <div className="">
+                            
                             <h4>
                               <Link href="#">
                                 {job.title}
@@ -107,7 +106,7 @@ const JobListingsTable = () => {
                             </button>
                           </li>
                           <li>
-                            <button data-text="Edit Job">
+                            <button onClick={() => handleEditJob(job.id)} data-text="Edit Job">
                               <span className="la la-pencil"></span>
                             </button>
                           </li>

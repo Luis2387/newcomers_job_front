@@ -1,54 +1,62 @@
 import axios from 'axios';
+import { axiosInstance } from '@/services/authService';
 
 const API_URL = "http://localhost:8000/api";
 
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('access_token');
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-};
-
 const getSkills = async () => {
-  const response = await axios.get(`${API_URL}/skills/`,getAuthHeaders());
+  const response = await axiosInstance.get(`/skills/`);
   return response.data;
 };
 
 const getCategories = async () => {
-  const response = await axios.get(`${API_URL}/categories/`,getAuthHeaders());
+  const response = await axiosInstance.get(`/categories/`);
   return response.data;
 };
 
 const getJobTypes = async () => {
-  const response = await axios.get(`${API_URL}/job-types/`,getAuthHeaders());
+  const response = await axiosInstance.get(`/job-types/`);
   return response.data;
 };
 
 const getEducationLevels = async () => {
-  const response = await axios.get(`${API_URL}/education-levels/`,getAuthHeaders());
+  const response = await axiosInstance.get(`/education-levels/`);
   return response.data;
+};
+
+const getJob = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/job/${id}/`);
+    return response.data;
+  } catch (error) {
+      console.error('Error fetching job data');
+      throw error;
+  }
 };
 
 const createJob = async (jobData) => {
-  const response = await axios.post(
-    `${API_URL}/create-job/`,
-    jobData,
-    getAuthHeaders()
-  );
+  const response = await axiosInstance.post(`/create-job/`,jobData);
   return response.data;
 };
 
+const updateJob = async (id, jobData) => {
+    try {
+      const response = await axiosInstance.put(`/edit-job/${id}/`, jobData);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating job');
+      throw error;
+    }
+};
+
 const getEmployerJobs = async () => {
-  const response = await axios.get(`${API_URL}/employer-jobs/`, getAuthHeaders());
+  const response = await axiosInstance.get(`/employer-jobs/`);
   return response.data;
 };
 
 
 const deleteJob = async (jobId) => {
   try {
-    const response = await axios.delete(`${API_URL}/delete-job/${jobId}/`, getAuthHeaders());
+    const response = await axiosInstance.delete(`/delete-job/${jobId}/`);
     return response.data;
   } catch (error) {
       console.error("Error deleting job:", error);
@@ -76,5 +84,7 @@ export default {
   getEmployerJobs,
   deleteJob,
   searchJobs,
+  updateJob,
+  getJob,
 };
 
