@@ -27,7 +27,6 @@ const FormInfoBox = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch profile data
         const profileData = await EmployerService.getProfile();
         setFormValues({
           phone: profileData.phone || "",

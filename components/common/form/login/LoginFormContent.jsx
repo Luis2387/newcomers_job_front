@@ -45,9 +45,9 @@ const FormContent = () => {
       if (userType === 'employer') {
         router.push('/employers-dashboard/dashboard');
       } else if (userType === 'jobseeker') {
-        //router.push('/jobseeker-dashboard/dashboard');
+        router.push('/candidates-dashboard/dashboard');
       } else {
-        alert('Login successful');
+        alert('Login failed');
       }
 
     } catch (error) {
