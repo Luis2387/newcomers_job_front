@@ -22,9 +22,9 @@ module.exports = [
   },
   // {
   //   id: 4,
-  //   name: "Applied Jobs",
+  //   name: "Candidates Single",
   //   icon: "la-briefcase",
-  //   routePath: "/candidates-dashboard/applied-jobs",
+  //   routePath: "/candidates-dashboard/candidates-single",
   //   active: "",
   // },
   // {
