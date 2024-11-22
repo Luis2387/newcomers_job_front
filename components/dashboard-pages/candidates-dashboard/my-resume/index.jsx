@@ -26,7 +26,7 @@ const Index = () => {
 
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="My Resume!" />
+          <BreadCrumb title="My Resume" />
           <MenuToggler />
 
           <div className="row">
@@ -34,7 +34,6 @@ const Index = () => {
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
-                    <h4>My Resume</h4>
                     <button onClick={openForm}></button>
                     {/* Trigger button for form */}
                   </div>

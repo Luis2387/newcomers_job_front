@@ -1,37 +1,111 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; 
 
-const Experiences = () => {
-  const [experiences, setExperiences] = useState([]);
+const Experience = ({ experiences = [], setResumeData }) => {
+  const [experienceList, setExperienceList] = useState(experiences);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
     company: "",
     position: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    short_description: "",
   });
 
+  useEffect(() => {
+    // Synchronize experienceList with experiences from props
+    setExperienceList(experiences);
+  }, [experiences]);
+
   const openModal = (index = null) => {
-    setEditingIndex(index);
-    if (index !== null) {
-      setFormData(experiences[index]);
-    } else {
-      setFormData({ company: "", position: "", startDate: "", endDate: "" });
-    }
-    setIsModalOpen(true);
-  };
+  setEditingIndex(index);
+  if (index !== null) {
+    const experience = experienceList[index];
+    setFormData({
+      ...experience,
+      startDate: experience.start_date ? new Date(experience.start_date) : new Date(),
+      endDate: experience.end_date ? new Date(experience.end_date) : new Date(),
+    });
+  } else {
+    setFormData({
+      company: "",
+      position: "",
+      short_description: "",
+      startDate: new Date(),
+      endDate: new Date(),
+    });
+  }
+  setIsModalOpen(true);
+};
+
 
   const saveExperience = () => {
-    if (editingIndex === null) {
-      setExperiences([...experiences, formData]);
-    } else {
-      const updatedExperiences = experiences.map((exp, i) =>
-        i === editingIndex ? formData : exp
-      );
-      setExperiences(updatedExperiences);
-    }
-    setIsModalOpen(false);
+  let updatedList;
+  const formattedData = {
+    ...formData,
+    start_date: formData.startDate ? formData.startDate.toISOString().split("T")[0] : null,
+    end_date: formData.endDate ? formData.endDate.toISOString().split("T")[0] : null,
   };
+
+  if (editingIndex === null) {
+    updatedList = [...experienceList, formattedData];
+  } else {
+    updatedList = experienceList.map((exp, i) => (i === editingIndex ? formattedData : exp));
+  }
+
+  setExperienceList(updatedList);
+  setResumeData((prev) => ({ ...prev, experiences: updatedList }));
+  setIsModalOpen(false);
+};
+
+
+  const CustomDatePicker = ({ placeholder, selectedDate, onChange }) => {
+  return (
+    <DatePicker
+      selected={selectedDate}
+      onChange={onChange}
+      dateFormat="yyyy-MM-dd"
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      customInput={
+        <input
+          type="text"
+          placeholder={placeholder}
+          style={styles.inputField}
+          value={selectedDate ? selectedDate.toISOString().split('T')[0] : ''}
+          readOnly
+        />
+      }
+    />
+  );
+  };
+
+  const formatDate = (date, dbDate, pickerDate) => {
+  
+  if (dbDate) return dbDate;
+
+  
+  if (pickerDate instanceof Date) {
+    return pickerDate.toISOString().split('T')[0];
+  }
+
+  
+  return 'N/A';
+  };
+
+  const handleDateChange = (date, field) => {
+  if (date) {
+    date.setHours(0, 0, 0, 0);
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: date,
+    }));
+  }
+};
+
 
   const styles = {
     entry: {
@@ -113,7 +187,7 @@ const Experiences = () => {
 
   return (
     <div>
-      {experiences.map((experience, index) => (
+      {experienceList.map((experience, index) => (
         <div
           key={index}
           style={styles.entry}
@@ -128,12 +202,20 @@ const Experiences = () => {
             <span style={styles.value}>{experience.position}</span>
           </div>
           <div style={styles.item}>
+            <span style={styles.label}>Short Description:</span>
+            <span style={styles.value}>{experience.short_description}</span>
+          </div>
+          <div style={styles.item}>
             <span style={styles.label}>Start Date:</span>
-            <span style={styles.value}>{experience.startDate}</span>
+            <span style={styles.value}>
+              {formatDate(experience.start_date, experience.start_date, experience.startDate)}
+            </span>
           </div>
           <div style={styles.item}>
             <span style={styles.label}>End Date:</span>
-            <span style={styles.value}>{experience.endDate}</span>
+            <span style={styles.value}>
+              {formatDate(experience.end_date, experience.end_date, experience.endDate)} 
+            </span>
           </div>
         </div>
       ))}
@@ -145,39 +227,45 @@ const Experiences = () => {
         <div style={styles.modalOverlay}>
           <div style={styles.modalContent}>
             <input
-              type="text"
-              placeholder="Company"
-              style={styles.inputField}
-              value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+            type="text"
+            placeholder="Company"
+            value={formData.company}
+            onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+            style={styles.inputField}
             />
             <input
-              type="text"
-              placeholder="Position"
-              style={styles.inputField}
-              value={formData.position}
-              onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+            type="text"
+            placeholder="Position"
+            value={formData.position}
+            onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+            style={styles.inputField}
             />
             <input
-              type="text"
+            type="text"
+            placeholder="Short Description"
+            value={formData.short_description}
+            onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
+            style={styles.inputField}
+            />
+            <CustomDatePicker
               placeholder="Start Date"
-              style={styles.inputField}
-              value={formData.startDate}
-              onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+              selectedDate={formData.startDate}
+              onChange={(date) => handleDateChange(date, "startDate")}
             />
-            <input
-              type="text"
+            <CustomDatePicker
               placeholder="End Date"
-              style={styles.inputField}
-              value={formData.endDate}
-              onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+              selectedDate={formData.endDate}
+              onChange={(date) => handleDateChange(date, "endDate")}
             />
-            <button type="button" style={styles.saveButton} onClick={saveExperience}>
-              Save
-            </button>
-            <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </button>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+              <button type="button" style={styles.saveButton} onClick={saveExperience}>
+                Save
+              </button>
+              <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+              
+            </div>
           </div>
         </div>
       )}
@@ -185,4 +273,4 @@ const Experiences = () => {
   );
 };
 
-export default Experiences;
+export default Experience;

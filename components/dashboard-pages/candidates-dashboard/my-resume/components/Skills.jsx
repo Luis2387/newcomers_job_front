@@ -1,34 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"
 
-const Skills = () => {
-  const [skills, setSkills] = useState([]);
+
+const Skills = ({ skills = [], setResumeData }) => {
+  const [skillList, setSkillList] = useState(skills);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
-    skill: "",
-    proficiency: "",
+    name: "",
+    proficiency: "basic",
   });
+
+  useEffect(() => {
+    // Synchronize skillList with skills from props
+    setSkillList(skills);
+  }, [skills]);
 
   const openModal = (index = null) => {
     setEditingIndex(index);
     if (index !== null) {
-      setFormData(skills[index]);
+      setFormData(skillList[index]);
     } else {
-      setFormData({ skill: "", proficiency: "" });
+      setFormData({ name: "", proficiency: "basic" });
     }
     setIsModalOpen(true);
   };
 
   const saveSkill = () => {
+    let updatedList;
     if (editingIndex === null) {
-      setSkills([...skills, formData]);
+      updatedList = [...skillList, formData];
     } else {
-      const updatedSkills = skills.map((skill, i) =>
-        i === editingIndex ? formData : skill
-      );
-      setSkills(updatedSkills);
+      updatedList = skillList.map((skill, i) => (i === editingIndex ? formData : skill));
     }
+    setSkillList(updatedList);
+    setResumeData(prev => ({ ...prev, candidate_skills: updatedList }));
     setIsModalOpen(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const styles = {
@@ -111,7 +122,7 @@ const Skills = () => {
 
   return (
     <div>
-      {skills.map((skill, index) => (
+      {skillList.map((skill, index) => (
         <div
           key={index}
           style={styles.entry}
@@ -119,7 +130,7 @@ const Skills = () => {
         >
           <div style={styles.item}>
             <span style={styles.label}>Skill:</span>
-            <span style={styles.value}>{skill.skill}</span>
+            <span style={styles.value}>{skill.name}</span>
           </div>
           <div style={styles.item}>
             <span style={styles.label}>Proficiency:</span>
@@ -133,27 +144,37 @@ const Skills = () => {
 
       {isModalOpen && (
         <div style={styles.modalOverlay}>
-          <div style={styles.modalContent}>
-            <input
+            <div style={styles.modalContent}>
+              <input
               type="text"
-              placeholder="Skill"
+              placeholder="Skill Name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
               style={styles.inputField}
-              value={formData.skill}
-              onChange={(e) => setFormData({ ...formData, skill: e.target.value })}
             />
-            <input
-              type="text"
-              placeholder="Proficiency"
-              style={styles.inputField}
+            <label htmlFor="proficiency">Proficiency:</label>
+            <select
+              id="proficiency"
+              name="proficiency"
               value={formData.proficiency}
-              onChange={(e) => setFormData({ ...formData, proficiency: e.target.value })}
-            />
-            <button type="button" style={styles.saveButton} onClick={saveSkill}>
-              Save
-            </button>
-            <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </button>
+              onChange={handleInputChange}
+              style={styles.inputField}
+            >
+              <option value="basic">Basic</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+              <button type="button" style={styles.saveButton} onClick={saveSkill}>
+                Save
+              </button>
+
+              <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+              
+            </div>
           </div>
         </div>
       )}

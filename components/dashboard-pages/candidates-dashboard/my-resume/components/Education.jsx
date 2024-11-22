@@ -1,36 +1,129 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; 
+import JobService from "@/services/JobService";
 
-const Education = () => {
-  const [educations, setEducations] = useState([]);
+const Education = ({ educations = [], setResumeData }) => {
+  const [educationList, setEducationList] = useState(educations);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
-    level: "",
+    level: { id: "", name: "" },
     school: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date(),
+    endDate: new Date(),
   });
+  const [educationLevels, setEducationLevels] = useState([]);
+
+  useEffect(() => {
+    const fetchEducationLevels = async () => {
+      try {
+        const levels = await JobService.getEducationLevels();
+        setEducationLevels(levels);
+      } catch (error) {
+        console.error("Error fetching education levels:", error);
+      }
+    };
+
+    fetchEducationLevels();
+  }, []);
+
+  useEffect(() => {
+    setEducationList(educations);
+  }, [educations]);
 
   const openModal = (index = null) => {
-    setEditingIndex(index);
-    if (index !== null) {
-      setFormData(educations[index]);
-    } else {
-      setFormData({ level: "", school: "", startDate: "", endDate: "" });
-    }
-    setIsModalOpen(true);
-  };
+  setEditingIndex(index);
+  if (index !== null) {
+    const education = educationList[index];
+    setFormData({
+      ...education,
+      level: education.level?.id || "",
+      startDate: education.start_date ? new Date(education.start_date) : new Date(),
+      endDate: education.end_date ? new Date(education.end_date) : new Date(),
+    });
+  } else {
+    setFormData({
+      level: "",
+      school: "",
+      startDate: new Date(),
+      endDate: new Date(),
+    });
+  }
+  setIsModalOpen(true);
+};
+
 
   const saveEducation = () => {
-    if (editingIndex === null) {
-      setEducations([...educations, formData]);
-    } else {
-      const updatedEducations = educations.map((edu, i) =>
-        i === editingIndex ? formData : edu
-      );
-      setEducations(updatedEducations);
-    }
-    setIsModalOpen(false);
+  let updatedList;
+  const formattedData = {
+    ...formData,
+    start_date: formData.startDate ? formData.startDate.toISOString().split("T")[0] : null,
+    end_date: formData.endDate ? formData.endDate.toISOString().split("T")[0] : null,
+  };
+
+  if (editingIndex === null) {
+    updatedList = [...educationList, formattedData];
+  } else {
+    updatedList = educationList.map((edu, i) => (i === editingIndex ? formattedData : edu));
+  }
+
+  setEducationList(updatedList);
+  setResumeData((prev) => ({ ...prev, educations: updatedList }));
+  setIsModalOpen(false);
+};
+
+  const CustomDatePicker = ({ placeholder, selectedDate, onChange }) => {
+  return (
+    <DatePicker
+      selected={selectedDate}
+      onChange={onChange}
+      dateFormat="yyyy-MM-dd"
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      customInput={
+        <input
+          type="text"
+          placeholder={placeholder}
+          style={styles.inputField}
+          value={selectedDate ? selectedDate.toISOString().split('T')[0] : ''}
+          readOnly
+        />
+      }
+    />
+  );
+  };
+
+  const formatDate = (date, dbDate, pickerDate) => {
+  
+  if (dbDate) return dbDate;
+
+  
+  if (pickerDate instanceof Date) {
+    return pickerDate.toISOString().split('T')[0];
+  }
+
+  
+  return 'N/A';
+  };
+
+
+  const handleDateChange = (date, field) => {
+  if (date) {
+    date.setHours(0, 0, 0, 0);
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: date,
+    }));
+  }
+};
+
+
+  const handleLevelChange = (e) => {
+    const selectedId = e.target.value;
+    const selectedLevel = educationLevels.find(level => level.id === parseInt(selectedId));
+    setFormData({ ...formData, level: { id: selectedId, name: selectedLevel ? selectedLevel.name : "" } });
   };
 
   // Inline styles in JavaScript
@@ -119,6 +212,8 @@ const Education = () => {
     },
   };
 
+  
+
   return (
     <div>
       {educations.map((education, index) => (
@@ -129,19 +224,24 @@ const Education = () => {
         >
           <div style={styles.educationItem}>
             <span style={styles.label}>Level:</span>
-            <span style={styles.value}>{education.level}</span>
+            <span style={styles.value}>
+              {education.level?.name || 
+                (typeof education.level === "string" || typeof education.level === "number"
+                  ? educationLevels.find(level => level.id === parseInt(education.level))?.name || "N/A"
+                  : "N/A")}
+            </span>
           </div>
           <div style={styles.educationItem}>
             <span style={styles.label}>School:</span>
             <span style={styles.value}>{education.school}</span>
-          </div>
+          </div>          
           <div style={styles.educationItem}>
-            <span style={styles.label}>Start Date:</span>
-            <span style={styles.value}>{education.startDate}</span>
+            <span style={styles.label}>Start Date:</span>            
+            {formatDate(education.start_date, education.start_date, education.startDate)}
           </div>
           <div style={styles.educationItem}>
             <span style={styles.label}>End Date:</span>
-            <span style={styles.value}>{education.endDate}</span>
+            {formatDate(education.end_date, education.end_date, education.endDate)} 
           </div>
         </div>
       ))}
@@ -157,40 +257,44 @@ const Education = () => {
       {isModalOpen && (
         <div style={styles.modalOverlay}>
           <div style={styles.modalContent}>
-            <input
-              type="text"
-              placeholder="Education Level"
-              style={styles.inputField}
+            <select
               value={formData.level}
               onChange={(e) => setFormData({ ...formData, level: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="School"
               style={styles.inputField}
-              value={formData.school}
-              onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-            />
+            >
+              <option value="">Select Education Level</option>
+              {educationLevels.map(level => (
+                <option key={level.id} value={level.id}>
+                  {level.name}
+                </option>
+              ))}
+            </select>
             <input
-              type="text"
+            type="text"
+            placeholder="School"
+            value={formData.school}
+            onChange={(e) => setFormData({ ...formData, school: e.target.value })}
+            style={styles.inputField}
+            />
+            <CustomDatePicker
               placeholder="Start Date"
-              style={styles.inputField}
-              value={formData.startDate}
-              onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+              selectedDate={formData.startDate}
+              onChange={(date) => handleDateChange(date, "startDate")}
             />
-            <input
-              type="text"
+            <CustomDatePicker
               placeholder="End Date"
-              style={styles.inputField}
-              value={formData.endDate}
-              onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+              selectedDate={formData.endDate}
+              onChange={(date) => handleDateChange(date, "endDate")}
             />
-            <button type="button" style={styles.saveButton} onClick={saveEducation}>
-              Save
-            </button>
-            <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </button>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+              <button type="button" style={styles.saveButton} onClick={saveEducation}>
+                Save
+              </button>
+              <button type="button" style={styles.cancelButton} onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+              
+            </div>
           </div>
         </div>
       )}
