@@ -75,4 +75,15 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 7,
+    label: "Candidates Single",
+    items: [
+      {
+        name: "Candidates Single ",
+        routePath: "/candidates-single-v1/1",
+      },
+     
+    ],
+  },
 ];
