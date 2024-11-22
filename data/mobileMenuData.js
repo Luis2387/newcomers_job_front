@@ -76,12 +76,23 @@ module.exports = [
     ],
   },
   {
-    id: 7,
+    id: 12,
     label: "Candidates Single",
     items: [
       {
         name: "Candidates Single ",
         routePath: "/candidates-single-v1/1",
+      },
+     
+    ],
+  },
+  {
+    id: 13,
+    label: "Qualification Recognition Info",
+    items: [
+      {
+        name: "Qualification Recognition Info ",
+        routePath: "/qualifications",
       },
      
     ],
