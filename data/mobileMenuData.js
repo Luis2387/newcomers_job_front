@@ -86,4 +86,27 @@ module.exports = [
       
     ],
   },
+
+  {
+    id: 13,
+    label: "Qualification Recognition Info",
+    items: [
+      {
+        name: "Qualification Recognition Info ",
+        routePath: "/qualifications",
+      },
+     
+    ],
+  },
+  {
+    id: 14,
+    label: "Employers Single",
+    items: [
+      {
+        name: "Employer Profile ",
+        routePath: "/employers-single",
+      },
+     
+    ],
+  },
 ];
