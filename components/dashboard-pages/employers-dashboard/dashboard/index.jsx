@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import MobileMenu from "../../../header/MobileMenu";
 import Login from "../../../common/form/login/Login";
-import DashboardCandidatesSidebar from "../../../header/DashboardCandidatesSidebar";
+import DashboardHeader from "../../../header/DashboardHeader";
 import BreadCrumb from "../../BreadCrumb";
-import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
+import DashboardEmployerSidebar from "../../../header/DashboardEmployerSidebar";
+
 import MenuToggler from "../../MenuToggler";
 
 const EmployerDashboard = () => {
@@ -99,9 +100,9 @@ const EmployerDashboard = () => {
       <span className="header-span"></span>
       {/* Header */}
       <Login />
-      <DashboardCandidatesHeader />
+      <DashboardHeader/>
       <MobileMenu />
-      <DashboardCandidatesSidebar />
+      <DashboardEmployerSidebar />
 
       {/* Dashboard */}
       <section className="user-dashboard">

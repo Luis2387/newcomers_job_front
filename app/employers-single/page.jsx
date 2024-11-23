@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import employers from "@/data/employers"; // Replace with your employer data
+import employers from "@/data/employers"; 
 import LoginPopup from "@/components/common/form/login/Login";
 import FooterDefault from "@/components/footer/common-footer";
 import DefaulHeader from "@/components/header/DefaulHeader";
