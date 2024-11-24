@@ -3,13 +3,11 @@ import Seo from "../../../components/common/Seo";
 import AllApplicants from "../../../components/dashboard-pages/employers-dashboard/all-applicants";
 
 export const metadata = {
-  title: 'All Applicants || Superio - Job Borad React NextJS Template',
+  title: 'All Applicants ',
   description:
-    'Superio - Job Borad React NextJS Template',
+    'Job Board',
   
 }
-
-
 
 const index = () => {
   return (

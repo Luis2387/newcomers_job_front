@@ -126,4 +126,3 @@ const JobListingsTable = () => {
 };
 
 export default JobListingsTable;
-

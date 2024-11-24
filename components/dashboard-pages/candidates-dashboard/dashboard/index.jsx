@@ -2,11 +2,9 @@ import MobileMenu from "../../../header/MobileMenu";
 import Login from "../../../common/form/login/Login";
 import DashboardCandidatesSidebar from "../../../header/DashboardCandidatesSidebar";
 import BreadCrumb from "../../BreadCrumb";
-import TopCardBlock from "./components/TopCardBlock";
-import Notification from "./components/Notification";
-import JobApplied from "./components/JobApplied";
 import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
 import MenuToggler from "../../MenuToggler";
+import JobListingsTable from "./components/JobListingsTable";
 
 const Index = () => {
   return (
@@ -50,17 +48,14 @@ const Index = () => {
             {/* </div> */}
             {/* End .col */}
 
-            <div className="col-xl-5 col-lg-12">
-              {/* <!-- Notification Widget --> */}
-              <div className="notification-widget ls-widget">
-                <div className="widget-title">
-                  <h4>Notifications</h4>
-                </div>
-                <div className="widget-content">
-                  <Notification />
-                </div>
+            <div className="row">
+            <div className="col-lg-12">
+              {/* <!-- Ls widget --> */}
+              <div className="ls-widget">
+                <JobListingsTable />
               </div>
             </div>
+          </div>
             {/* End .col */}
 
             {/* <div className="col-lg-12"> */}
