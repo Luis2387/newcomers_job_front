@@ -11,11 +11,18 @@ const ResumeForm = () => {
     experiences: [],
   });
 
+  const [localEducations, setLocalEducations] = useState([]);
+  const [localSkills, setLocalSkills] = useState([]);
+  const [localExperiences, setLocalExperiences] = useState([]);
+
   useEffect(() => {
     const fetchResume = async () => {
       try {
         const data = await resumeService.getResume();
         setResumeData(data);
+        setLocalEducations(data.educations || []);
+        setLocalSkills(data.candidate_skills || []);
+        setLocalExperiences(data.experiences || []);
       } catch (error) {
         console.error("Error fetching resume data:", error);
       }
@@ -25,20 +32,28 @@ const ResumeForm = () => {
   }, []);
 
   const handleSave = async (event) => {
-  event.preventDefault();
-  console.log("Datos enviados al backend:", resumeData);
-  try {
-    if (resumeData.id) {
-      await resumeService.updateResume(resumeData.id, resumeData);
-      //setResumeData(updatedData);
-      console.log("Data updated successfully");
-    } else {
-      console.error("No resume ID found for updating");
+    event.preventDefault();
+
+    const updatedResume = {
+      ...resumeData,
+      educations: localEducations,
+      candidate_skills: localSkills,
+      experiences: localExperiences,
+    };
+
+    console.log("Datos enviados al backend:", updatedResume);
+
+    try {
+      if (resumeData.id) {
+        await resumeService.updateResume(resumeData.id, updatedResume);
+        console.log("Data updated successfully");
+      } else {
+        console.error("No resume ID found for updating");
+      }
+    } catch (error) {
+      console.error("Error updating data:", error);
     }
-  } catch (error) {
-    console.error("Error updating data:", error);
-  }
-};
+  };
 
 
 
@@ -52,7 +67,10 @@ const ResumeForm = () => {
                 <h4>Education</h4>
               </div>
               <div className="widget-content">
-                <Education educations={resumeData.educations} setResumeData={setResumeData} />
+                <Education
+                  educations={localEducations}
+                  setEducations={setLocalEducations}
+                />
               </div>
             </div>
           </div>
@@ -63,7 +81,7 @@ const ResumeForm = () => {
                 <h4>Skills</h4>
               </div>
               <div className="widget-content">
-                <Skills skills={resumeData.candidate_skills} setResumeData={setResumeData} />
+                <Skills skills={localSkills} setSkills={setLocalSkills} />
               </div>
             </div>
           </div>
@@ -74,7 +92,10 @@ const ResumeForm = () => {
                 <h4>Experience</h4>
               </div>
               <div className="widget-content">
-                <Experience experiences={resumeData.experiences} setResumeData={setResumeData} />
+                <Experience
+                  experiences={localExperiences}
+                  setExperiences={setLocalExperiences}
+                />
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 
 
-const Skills = ({ skills = [], setResumeData }) => {
+const Skills = ({ skills = [], setSkills }) => {
   const [skillList, setSkillList] = useState(skills);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -33,7 +33,10 @@ const Skills = ({ skills = [], setResumeData }) => {
       updatedList = skillList.map((skill, i) => (i === editingIndex ? formData : skill));
     }
     setSkillList(updatedList);
-    setResumeData(prev => ({ ...prev, candidate_skills: updatedList }));
+    setSkills(updatedList);
+    if (setSkills) {
+      setSkills(updatedList);
+    }
     setIsModalOpen(false);
   };
 
@@ -138,8 +141,15 @@ const Skills = ({ skills = [], setResumeData }) => {
           </div>
         </div>
       ))}
-      <button style={styles.addButton} onClick={() => openModal()}>
-        Add Skill
+      <button
+        type="button"
+        style={styles.addButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal();
+        }}
+      >
+        Add Experience
       </button>
 
       {isModalOpen && (

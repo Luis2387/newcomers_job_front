@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; 
 import JobService from "@/services/JobService";
 
-const Education = ({ educations = [], setResumeData }) => {
+const Education = ({ educations = [], setEducations }) => {
   const [educationList, setEducationList] = useState(educations);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -12,7 +12,7 @@ const Education = ({ educations = [], setResumeData }) => {
     school: "",
     startDate: new Date(),
     endDate: new Date(),
-  });
+  }); 
   const [educationLevels, setEducationLevels] = useState([]);
 
   useEffect(() => {
@@ -36,9 +36,11 @@ const Education = ({ educations = [], setResumeData }) => {
   setEditingIndex(index);
   if (index !== null) {
     const education = educationList[index];
+    const selectedLevel = educationLevels.find((level) => level.id === parseInt(education.level?.id || education.level));
+    
     setFormData({
       ...education,
-      level: education.level?.id || "",
+      level: selectedLevel || {},
       startDate: education.start_date ? new Date(education.start_date) : new Date(),
       endDate: education.end_date ? new Date(education.end_date) : new Date(),
     });
@@ -56,8 +58,12 @@ const Education = ({ educations = [], setResumeData }) => {
 
   const saveEducation = () => {
   let updatedList;
+
+  const selectedLevel = educationLevels.find((level) => level.id === parseInt(formData.level?.id || formData.level));
+
   const formattedData = {
     ...formData,
+    level: selectedLevel || {},
     start_date: formData.startDate ? formData.startDate.toISOString().split("T")[0] : null,
     end_date: formData.endDate ? formData.endDate.toISOString().split("T")[0] : null,
   };
@@ -69,7 +75,9 @@ const Education = ({ educations = [], setResumeData }) => {
   }
 
   setEducationList(updatedList);
-  setResumeData((prev) => ({ ...prev, educations: updatedList }));
+    if (setEducations) {
+      setEducations(updatedList);
+    }
   setIsModalOpen(false);
 };
 
@@ -246,10 +254,14 @@ const Education = ({ educations = [], setResumeData }) => {
         </div>
       ))}
       <button
+        type="button"
         style={styles.addButton}
         onMouseOver={(e) => (e.target.style.backgroundColor = styles.addButtonHover.backgroundColor)}
         onMouseOut={(e) => (e.target.style.backgroundColor = styles.addButton.backgroundColor)}
-        onClick={() => openModal()}
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal();
+        }}
       >
         Add Education
       </button>

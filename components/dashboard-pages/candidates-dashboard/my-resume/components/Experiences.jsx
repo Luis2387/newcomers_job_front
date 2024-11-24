@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; 
 
-const Experience = ({ experiences = [], setResumeData }) => {
+const Experience = ({ experiences = [], setExperiences }) => {
   const [experienceList, setExperienceList] = useState(experiences);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -56,7 +56,10 @@ const Experience = ({ experiences = [], setResumeData }) => {
   }
 
   setExperienceList(updatedList);
-  setResumeData((prev) => ({ ...prev, experiences: updatedList }));
+  setExperiences(updatedList);
+    if (setExperiences) {
+      setExperiences(updatedList);
+    }
   setIsModalOpen(false);
 };
 
@@ -219,7 +222,14 @@ const Experience = ({ experiences = [], setResumeData }) => {
           </div>
         </div>
       ))}
-      <button style={styles.addButton} onClick={() => openModal()}>
+      <button
+        type="button"
+        style={styles.addButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal();
+        }}
+      >
         Add Experience
       </button>
 
