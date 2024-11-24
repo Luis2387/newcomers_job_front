@@ -44,15 +44,7 @@ const JobListingsTable = () => {
     <div className="tabs-box">
       <div className="widget-title">
         <h4>My Job Listings</h4>
-        <div className="chosen-outer">
-          <select className="chosen-single form-select">
-            <option>Last 6 Months</option>
-            <option>Last 12 Months</option>
-            <option>Last 16 Months</option>
-            <option>Last 24 Months</option>
-            <option>Last 5 year</option>
-          </select>
-        </div>
+        
       </div>
       <div className="widget-content">
         <div className="table-outer">
