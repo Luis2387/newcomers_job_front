@@ -120,22 +120,28 @@ const EmployerSingleClient = () => {
                 Your Trusted Partner in {employer?.industry}.
               </p>
               <ul style={styles.employerInfo}>
-                <li style={styles.employerInfoItem}>
+                {/* <li style={styles.employerInfoItem}>
                   <span style={styles.icon} className="flaticon-briefcase"></span>
                   {employer?.industry}
+                </li> */}
+
+                <li style={styles.employerInfoItem}>
+                  <span style={styles.icon} className="flaticon-telephone"></span>{" "}
+                  Phone: {employer?.foundedYear}
+                </li>
+                <li style={styles.employerInfoItem}>
+                  <span style={styles.icon} className="flaticon-mail"></span>{" "}
+                  E-mail: {employer?.foundedYear}
+                </li>
+                <li style={styles.employerInfoItem}>
+                  <span style={styles.icon} className="flaticon-worldwide"></span>
+                  Website: 
                 </li>
                 <li style={styles.employerInfoItem}>
                   <span style={styles.icon} className="flaticon-map-locator"></span>
-                  {employer?.location}
+                  Location: {employer?.location}
                 </li>
-                <li style={styles.employerInfoItem}>
-                  <span style={styles.icon} className="flaticon-clock"></span>{" "}
-                  Founded: {employer?.foundedYear}
-                </li>
-                <li style={styles.employerInfoItem}>
-                  <span style={styles.icon} className="flaticon-group"></span>{" "}
-                  Company Size: {employer?.companySize}
-                </li>
+
               </ul>
 
               {/* About the Company */}
@@ -184,7 +190,7 @@ const EmployerSingleClient = () => {
         </div>
       </section>
 
-      <FooterDefault footerStyle="alternate5" />
+      {/* <FooterDefault footerStyle="alternate5" /> */}
     </>
   );
 };
