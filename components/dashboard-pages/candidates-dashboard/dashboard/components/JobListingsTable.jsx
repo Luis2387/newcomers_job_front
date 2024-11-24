@@ -1,26 +1,36 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import ApplicationService from '@/services/ApplicationService';
 
 const JobListingsTable = () => {
-  const [jobs] = useState([
-    { id: 1, company: 'Company A', title: 'Developer', location: 'New York', date_posted: '2024-11-07', status: 'Applied' },
-    { id: 2, company: 'Company B', title: 'Designer', location: 'San Francisco', date_posted: '2024-11-06', status: 'Under Review' },
-  ]);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const data = await ApplicationService.getApplications();
+        setJobs(data);
+      } catch (err) {
+        setError('Failed to load applications');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApplications();
+  }, []);
+
+  if (loading) return <p>Loading applications...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>My Job Listings</h4>
-        <div className="chosen-outer">
-          <select className="chosen-single form-select">
-            <option>Last 6 Months</option>
-            <option>Last 12 Months</option>
-            <option>Last 16 Months</option>
-            <option>Last 24 Months</option>
-            <option>Last 5 Years</option>
-          </select>
-        </div>
+        <h4>My Job Applications</h4>
       </div>
       <div className="widget-content">
         <div className="table-outer">
@@ -28,9 +38,9 @@ const JobListingsTable = () => {
             <thead>
               <tr>
                 <th>Company</th>
-                <th>Title</th>
+                <th>Job Title</th>
                 <th>Location</th>
-                <th>Date</th>
+                <th>Application Date</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -38,16 +48,16 @@ const JobListingsTable = () => {
               {jobs.length > 0 ? (
                 jobs.map((job) => (
                   <tr key={job.id}>
-                    <td>{job.company}</td>
-                    <td>{job.title}</td>
-                    <td>{job.location}</td>
-                    <td>{new Date(job.date_posted).toLocaleDateString()}</td>
+                    <td>{job.job.employer.company_name}</td>
+                    <td>{job.job.title}</td>
+                    <td>{job.job.location}</td>
+                    <td>{new Date(job.application_date).toLocaleDateString()}</td>
                     <td>{job.status}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5">No jobs found.</td>
+                  <td colSpan="5">No applications found.</td>
                 </tr>
               )}
             </tbody>
