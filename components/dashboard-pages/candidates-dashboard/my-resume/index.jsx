@@ -34,6 +34,7 @@ const Index = () => {
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
+                  <h4>Candidate's Resume</h4>
                     <button onClick={openForm}></button>
                     {/* Trigger button for form */}
                   </div>

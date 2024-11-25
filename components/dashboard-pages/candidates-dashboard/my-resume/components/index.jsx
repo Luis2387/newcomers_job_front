@@ -46,7 +46,7 @@ const ResumeForm = () => {
     try {
       if (resumeData.id) {
         await resumeService.updateResume(resumeData.id, updatedResume);
-        console.log("Data updated successfully");
+        alert("Resume updated successfully");
       } else {
         console.error("No resume ID found for updating");
       }

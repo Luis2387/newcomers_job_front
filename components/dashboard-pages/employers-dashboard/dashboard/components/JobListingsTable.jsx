@@ -36,6 +36,12 @@ const JobListingsTable = () => {
     }
   };
 
+
+  const handleViewApplicants = (jobId) => {
+  router.push(`/employers-dashboard/manage-applications?jobId=${jobId}`);
+  };
+
+
   const handleEditJob = (jobId) => {
     router.push(`/employers-dashboard/post-jobs?id=${jobId}`);
   };
@@ -43,7 +49,7 @@ const JobListingsTable = () => {
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>My Job Listings</h4>
+        <h4>List of published Jobs</h4>
         
       </div>
       <div className="widget-content">
@@ -51,8 +57,7 @@ const JobListingsTable = () => {
           <table className="default-table manage-job-table">
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Applications</th>
+                <th>Title</th>                
                 <th>Created</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -68,9 +73,7 @@ const JobListingsTable = () => {
                           <div className="">
                             
                             <h4>
-                              <Link href="#">
-                                {job.title}
-                              </Link>
+                                {job.title}                              
                             </h4>
                             <ul className="job-info">                              
                               <li>
@@ -82,9 +85,9 @@ const JobListingsTable = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="applied">
+                    {/* <!-- <td className="applied">
                       <a href="#">-</a>
-                    </td>
+                    </td> --> */}                    
                     <td>
                       {new Date(job.date_posted).toLocaleDateString()} <br />                      
                     </td>
@@ -93,7 +96,7 @@ const JobListingsTable = () => {
                       <div className="option-box">
                         <ul className="option-list">
                           <li>
-                            <button data-text="View Application">
+                            <button onClick={() => handleViewApplicants(job.id)} data-text="View Applicants">
                               <span className="la la-eye"></span>
                             </button>
                           </li>

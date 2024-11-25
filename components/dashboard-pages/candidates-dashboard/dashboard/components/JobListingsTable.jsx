@@ -48,7 +48,7 @@ const JobListingsTable = () => {
               {jobs.length > 0 ? (
                 jobs.map((job) => (
                   <tr key={job.id}>
-                    <td>{job.job.employer.company_name}</td>
+                    <td>{job.job.company_name}</td>
                     <td>{job.job.title}</td>
                     <td>{job.job.location}</td>
                     <td>{new Date(job.application_date).toLocaleDateString()}</td>

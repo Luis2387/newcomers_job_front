@@ -128,6 +128,8 @@ const PostBoxForm = () => {
       skills: formValues.skills.map(skill => skill.value),
     };
 
+    console.log("Data being sent to backend:", jobData);
+
     try {
       if (id) {
         
@@ -138,7 +140,7 @@ const PostBoxForm = () => {
         await JobService.createJob(jobData);
         alert("Job created successfully");
       }
-      router.push('/employers-dashboard/manage-jobs'); 
+      router.push('/employers-dashboard/dashboard'); 
     } catch (error) {
       console.error("Error submitting job:", error);
       alert("Error submitting job.");
