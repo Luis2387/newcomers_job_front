@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import candidatesMenuData from "../../data/candidatesMenuData";
+import employerProfileMenuData from "../../data/employerProfileMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
+import authService from '@/services/authService';
 
 import { usePathname } from "next/navigation";
 const DashboardCandidatesHeader = () => {
@@ -19,6 +20,10 @@ const DashboardCandidatesHeader = () => {
             setNavbar(false);
         }
     };
+
+    const handleLogout = () => {
+        authService.logout();
+      };
 
     useEffect(() => {
         window.addEventListener("scroll", changeBackground);
@@ -75,27 +80,23 @@ const DashboardCandidatesHeader = () => {
                             </a>
 
                             <ul className="dropdown-menu">
-                                {candidatesMenuData.map((item) => (
-                                    <li
-                                        className={`${
-                                            isActiveLink(
-                                                item.routePath,
-                                                usePathname()
-                                            )
-                                                ? "active"
-                                                : ""
-                                        } mb-1`}
-                                        key={item.id}
-                                    >
-                                        <Link href={item.routePath}>
-                                            <i
-                                                className={`la ${item.icon}`}
-                                            ></i>{" "}
-                                            {item.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            {employerProfileMenuData.map((item) => (
+                              <li
+                                key={item.id}
+                                className={`${isActiveLink(item.routePath, usePathname()) ? 'active' : ''} mb-1`}
+                              >
+                                {item.name === 'Logout' ? (
+                                  <a onClick={handleLogout}>
+                                    <i className={`la ${item.icon}`}></i> {item.name}
+                                  </a>
+                                ) : (
+                                  <Link href={item.routePath}>
+                                    <i className={`la ${item.icon}`}></i> {item.name}
+                                  </Link>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                         {/* End dropdown */}
                     </div>

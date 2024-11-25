@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import employerProfileMenuData from "../../data/employerProfileMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { usePathname } from "next/navigation";
+import authService from '@/services/authService';
 
 
 const DashboardHeader = () => {
@@ -20,6 +21,10 @@ const DashboardHeader = () => {
             setNavbar(false);
         }
     };
+
+    const handleLogout = () => {
+        authService.logout();
+      };
 
     useEffect(() => {
         window.addEventListener("scroll", changeBackground);
@@ -78,27 +83,23 @@ const DashboardHeader = () => {
                             </a>
 
                             <ul className="dropdown-menu">
-                                {employerProfileMenuData.map((item) => (
-                                    <li
-                                        className={`${
-                                            isActiveLink(
-                                                item.routePath,
-                                                usePathname()
-                                            )
-                                                ? "active"
-                                                : ""
-                                        } mb-1`}
-                                        key={item.id}
-                                    >
-                                        <Link href={item.routePath}>
-                                            <i
-                                                className={`la ${item.icon}`}
-                                            ></i>{" "}
-                                            {item.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            {employerProfileMenuData.map((item) => (
+                              <li
+                                key={item.id}
+                                className={`${isActiveLink(item.routePath, usePathname()) ? 'active' : ''} mb-1`}
+                              >
+                                {item.name === 'Logout' ? (
+                                  <a onClick={handleLogout}>
+                                    <i className={`la ${item.icon}`}></i> {item.name}
+                                  </a>
+                                ) : (
+                                  <Link href={item.routePath}>
+                                    <i className={`la ${item.icon}`}></i> {item.name}
+                                  </Link>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                         {/* End dropdown */}
                     </div>

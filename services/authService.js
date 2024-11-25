@@ -95,5 +95,37 @@ const authService = {
 
 };
 
+const logout = async () => {
+  try {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (!refreshToken) {
+      console.error('No refresh token found');
+      throw new Error('No refresh token found');
+    }
+
+    console.log('Sending refresh token:', refreshToken);
+
+    await axiosInstance.post(`/logout/`, {
+      refresh: refreshToken,
+    });
+
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_type');
+    Cookies.remove('access_token');
+    Cookies.remove('user_type');
+
+    window.location.href = '/';
+  } catch (error) {
+     console.error('Error during logout:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
 export { axiosInstance };
-export default authService;
+export default {
+  logout, 
+  authService,
+};
+
