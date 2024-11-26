@@ -1,11 +1,10 @@
 module.exports = [
   {
     id: 1,
-    logo: "/images/resource/company-logo/1-1.png",
     jobTitle: "Software Engineer (Android), Libraries",
     company: "Segment",
     location: "London, UK",
-    time: "11 hours ago",
+    time: "Date",
     salary: "$35k - $45k",
     jobType: [
       {
@@ -13,12 +12,16 @@ module.exports = [
         type: "Full Time",
       },
       {
+        styleClass: "required",
+        type: "1 year experience",
+      },
+      {
         styleClass: "privacy",
-        type: "Private",
+        type: "Software category",
       },
       {
         styleClass: "required",
-        type: "Urgent",
+        type: "bachelor-degree",
       },
     ],
     link: "https://segment.com",

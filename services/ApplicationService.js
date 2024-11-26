@@ -34,8 +34,20 @@ const updateApplicationStatus = async (applicationId, status) => {
 };
 
 
+const createApplication = async (applicationData) => {
+  try {
+    const response = await axiosInstance.post(`/apply/`, applicationData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating application:", error);
+    throw error;
+  }
+};
+
+
 export default {
   getApplications,
   getJobApplicants,
   updateApplicationStatus,
+  createApplication,
 };

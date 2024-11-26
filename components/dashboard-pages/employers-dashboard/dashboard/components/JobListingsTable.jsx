@@ -73,8 +73,11 @@ const JobListingsTable = () => {
                           <div className="">
                             
                             <h4>
-                                {job.title}                              
+                                <Link href={`/job-single/${job.id}`}>
+                                  {job.title}
+                                </Link>                            
                             </h4>
+                            
                             <ul className="job-info">                              
                               <li>
                                 <span className="icon flaticon-map-locator"></span>

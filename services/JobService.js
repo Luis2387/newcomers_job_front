@@ -28,8 +28,12 @@ const getJob = async (id) => {
     const response = await axios.get(`${API_URL}/job/${id}/`);
     return response.data;
   } catch (error) {
-      console.error('Error fetching job data');
-      throw error;
+    if (error.response) {
+      console.error(`Error in getJob (Status: ${error.response.status}):`, error.response.data);
+    } else {
+      console.error("Error in getJob:", error.message);
+    }
+    throw error;
   }
 };
 

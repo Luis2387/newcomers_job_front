@@ -90,42 +90,39 @@ const authService = {
   
   getUserType: () => {
     return localStorage.getItem('user_type');
-  }
+  },
 
+  logout: async () => {
+    try {
+      const refreshToken = localStorage.getItem('refresh_token');
+      if (!refreshToken) {
+        throw new Error('No refresh token found');
+      }
 
-};
+      const response = await axiosInstance.post(`/logout/`, {
+        refresh: refreshToken,
+      });
 
-const logout = async () => {
-  try {
-    const refreshToken = localStorage.getItem('refresh_token');
-    if (!refreshToken) {
-      console.error('No refresh token found');
-      throw new Error('No refresh token found');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('user_type');
+      Cookies.remove('access_token');
+      Cookies.remove('user_type');
+
+      window.location.href = '/';
+
+      return response.data;
+    } catch (error) {
+      console.error('Error during logout:', error.response?.data || error.message);
+      throw error;
     }
+  },
 
-    console.log('Sending refresh token:', refreshToken);
 
-    await axiosInstance.post(`/logout/`, {
-      refresh: refreshToken,
-    });
-
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_type');
-    Cookies.remove('access_token');
-    Cookies.remove('user_type');
-
-    window.location.href = '/';
-  } catch (error) {
-     console.error('Error during logout:', error.response?.data || error.message);
-    throw error;
-  }
 };
+
 
 
 export { axiosInstance };
-export default {
-  logout, 
-  authService,
-};
+export default authService;
 

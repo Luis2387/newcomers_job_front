@@ -52,17 +52,9 @@ const FilterJobsBox = () => {
       {jobs.map((job) => (
         <div className="job-block" key={job.id}>
           <div className="inner-box">
-            <div className="content">
-              <span className="company-logo">
-                <Image
-                  width={50}
-                  height={49}
-                  src={job.logo || "/default-logo.png"}
-                  alt="Company Logo"
-                />
-              </span>
+            <div className="content">              
               <h4>
-                <Link href={`/job-single-v1/${job.id}`}>
+                <Link href={`/job-single/${job.id}`}>
                   {job.title}
                 </Link>
               </h4>
