@@ -8,7 +8,7 @@ import JobService from "@/services/JobService";
 import EmployerService from "@/services/EmployerService";
 import LoginPopup from "@/components/common/form/login/Login";
 import FooterDefault from "@/components/footer/common-footer";
-import DefaulHeader from "@/components/header/DefaulHeader";
+import DefaulHeader from "@/components/header/DefaultHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 
 const EmployerSingleClient = () => {

@@ -5,13 +5,13 @@ module.exports = [
     items: [
       {
         name: "Home Page ",
-        routePath: "/home-17",
+        routePath: "/",
       },
     ],
   },
   {
     id: 2,
-    label: "Job Listing",
+    label: "Jobs",
     items: [
      
       {
@@ -19,50 +19,11 @@ module.exports = [
         routePath: "/job-list",
       },
     ],
-  },
-  {
-    id: 3,
-    label: "Job Single",
-    items: [
-     
-      {
-        name: "Job Single ",
-        routePath: "/job-single-v3/3",
-      },
-      
-    ],
-  },
-  {
-    id: 9,
-    label: "Pages",
-    items: [
-      {
-        name: "About",
-        routePath: "/about",
-      },
-      
-      {
-        name: "FAQ's",
-        routePath: "/faq",
-      },
-      {
-        name: "Terms",
-        routePath: "/terms",
-      },
-      
-      {
-        name: "Contact",
-        routePath: "/contact",
-      },
-      {
-        name: "404",
-        routePath: "/404",
-      },
-    ],
-  },
+  }, 
+  
   
   {
-    id: 11,
+    id: 3,
     label: "Dashboard",
     items: [
       {
@@ -75,20 +36,11 @@ module.exports = [
       },
     ],
   },
-  {
-    id: 12,
-    label: "Candidates Single",
-    items: [
-      {
-        name: "Candidate Profile",
-        routePath: "/candidates-single-v1/1",
-      },
-      
-    ],
-  },
+
+  
 
   {
-    id: 13,
+    id: 4,
     label: "Qualification Recognition Info",
     items: [
       {
@@ -98,15 +50,17 @@ module.exports = [
      
     ],
   },
+
   {
-    id: 14,
-    label: "Employers Single",
+    id: 5,
+    label: "Logout",
     items: [
       {
-        name: "Employer Profile ",
-        routePath: "/employers-single",
+        name: "Logout",
+        routePath: "/logout",
       },
-     
+      
     ],
   },
+  
 ];

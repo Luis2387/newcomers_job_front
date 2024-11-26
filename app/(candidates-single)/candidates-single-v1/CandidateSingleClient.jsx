@@ -5,7 +5,7 @@ import candidates from "@/data/candidates";
 import candidateResume from "@/data/candidateResume";
 import LoginPopup from "@/components/common/form/login/Login";
 import FooterDefault from "@/components/footer/common-footer";
-import DefaulHeader from "@/components/header/DefaulHeader";
+import DefaulHeader from "@/components/header/DefaultHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 
 import GalleryBox from "@/components/candidates-single-pages/shared-components/GalleryBox";

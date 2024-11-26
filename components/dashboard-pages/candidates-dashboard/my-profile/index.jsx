@@ -4,7 +4,7 @@ import DashboardCandidatesSidebar from "../../../header/DashboardCandidatesSideb
 import BreadCrumb from "../../BreadCrumb";
 import MyProfile from "./components/my-profile";
 import MenuToggler from "../../MenuToggler";
-import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
+import DashboardHeader from "@/components/header/DashboardHeader";
 
 const index = () => {
   return (
@@ -15,7 +15,7 @@ const index = () => {
       <Login />
       {/* End Login Popup Modal */}
 
-      <DashboardCandidatesHeader />
+      <DashboardHeader />
       {/* End Header */}
 
       <MobileMenu />

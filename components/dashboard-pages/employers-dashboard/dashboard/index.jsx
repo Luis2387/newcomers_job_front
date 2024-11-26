@@ -1,5 +1,5 @@
 import MobileMenu from "../../../header/MobileMenu";
-import DashboardHeader from "../../../header/DashboardHeader";
+import DashboardHeader from "@/components/header/DashboardHeader";
 import Login from "../../../common/form/login/Login";
 import DashboardEmployerSidebar from "../../../header/DashboardEmployerSidebar";
 import BreadCrumb from "../../BreadCrumb";

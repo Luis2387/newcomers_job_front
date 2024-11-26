@@ -2,7 +2,7 @@ import MobileMenu from "../../../header/MobileMenu";
 import Login from "../../../common/form/login/Login";
 import DashboardCandidatesSidebar from "../../../header/DashboardCandidatesSidebar";
 import BreadCrumb from "../../BreadCrumb";
-import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
+import DashboardCandidatesHeader from "@/components/header/DashboardHeader";
 import MenuToggler from "../../MenuToggler";
 import JobListingsTable from "./components/JobListingsTable";
 

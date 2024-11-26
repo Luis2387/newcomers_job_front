@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { axiosInstance } from '@/services/authService';
 
-const getCandidateProfile = async (id) => {
+const getProfile = async (id) => {
   const endpoint = id
     ? `/candidate-profile/${id}/`
     : `/candidate-profile/`;

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import JobService from "@/services/JobService";
 import ApplicationService from "@/services/ApplicationService";
 import Login from "@/components/common/form/login/Login";
-import DefaulHeader from "@/components/header/DefaulHeader";
+import DefaulHeader from "@/components/header/DefaultHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 import FooterDefault from "@/components/footer/common-footer";
 

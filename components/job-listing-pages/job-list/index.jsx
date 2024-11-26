@@ -1,10 +1,10 @@
 import FilterJobsBox from "./FilterJobsBox";
 import JobSearchForm from "./JobSearchForm";
 import FilterSidebar from "./FilterSidebar";
-import Login from "../../common/form/login/Login";
-import DefaulHeader from "../../header/DefaulHeader";
-import MobileMenu from "../../header/MobileMenu";
+import Login from "@/components/common/form/login/Login";
 import FooterDefault from "@/components/footer/common-footer";
+import DefaulHeader from "@/components/header/DefaultHeader";
+import MobileMenu from "@/components/header/MobileMenu";
 
 
 const index = () => {
