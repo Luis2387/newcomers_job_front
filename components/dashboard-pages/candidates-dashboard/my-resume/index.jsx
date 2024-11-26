@@ -4,7 +4,7 @@ import Login from "../../../common/form/login/Login";
 import DashboardCandidatesSidebar from "../../../header/DashboardCandidatesSidebar";
 import BreadCrumb from "../../BreadCrumb";
 import Resume from "./components";
-import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
+import DashboardCandidatesHeader from "@/components/header/DashboardHeader";
 import MenuToggler from "../../MenuToggler";
 import React, { useState } from "react";
 import ResumeForm from "./components";
@@ -22,6 +22,7 @@ const Index = () => {
 
       <DashboardCandidatesHeader />
       <MobileMenu />
+      {/* End MobileMenu */}
       <DashboardCandidatesSidebar />
 
       <section className="user-dashboard">
