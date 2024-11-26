@@ -4,22 +4,22 @@ import { axiosInstance } from '@/services/authService';
 const API_URL = "http://localhost:8000/api";
 
 const getSkills = async () => {
-  const response = await axiosInstance.get(`/skills/`);
+  const response = await axios.get(`${API_URL}/skills/`);
   return response.data;
 };
 
 const getCategories = async () => {
-  const response = await axiosInstance.get(`/categories/`);
+  const response = await axios.get(`${API_URL}/categories/`);
   return response.data;
 };
 
 const getJobTypes = async () => {
-  const response = await axiosInstance.get(`/job-types/`);
+  const response = await axios.get(`${API_URL}/job-types/`);
   return response.data;
 };
 
 const getEducationLevels = async () => {
-  const response = await axiosInstance.get(`/education-levels/`);
+  const response = await axios.get(`${API_URL}/education-levels/`);
   return response.data;
 };
 

@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation';
 import dynamic from "next/dynamic";
 import JobService from "@/services/JobService";
 import ApplicationService from "@/services/ApplicationService";
+import Login from "@/components/common/form/login/Login";
 import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
+import FooterDefault from "@/components/footer/common-footer";
 
 const JobSingle = ({ params }) => {
   const [job, setJob] = useState(null);
@@ -58,7 +60,6 @@ const JobSingle = ({ params }) => {
         setSkills(skillsMap);
         setJob(jobData);
 
-        // Verificar si el usuario está autenticado
         const token = localStorage.getItem("access_token");
         setIsAuthenticated(!!token);
       } catch (error) {
@@ -76,7 +77,6 @@ const JobSingle = ({ params }) => {
 
   const handleApply = async () => {
     if (!isAuthenticated) {
-      // Mostrar el popup de login
       const loginModal = document.querySelector("#loginPopupModal");
       if (loginModal) {
         const bootstrapModal = new bootstrap.Modal(loginModal);
@@ -86,7 +86,6 @@ const JobSingle = ({ params }) => {
     }
 
     try {
-      // Crear la aplicación
       await ApplicationService.createApplication({ job: id });
       alert("Application submitted successfully!");
       router.push('/candidates-dashboard/dashboard');
@@ -101,6 +100,8 @@ const JobSingle = ({ params }) => {
       {/* Header Span */}
       <span className="header-span"></span>
 
+      <Login />
+      {/* End Login Popup Modal */}
       {/* Header */}
       <DefaulHeader />
       {/* Mobile Menu */}
@@ -185,7 +186,10 @@ const JobSingle = ({ params }) => {
                         <h5 className="company-name">
                           {job?.employer_profile?.company_name || "N/A"}
                         </h5>
-                        <a href="#" className="profile-link">
+                        <a
+                          href={`/employers-single/${job?.employer_profile?.id}`}
+                          className="profile-link"
+                        >
                           View company profile
                         </a>
                       </div>
@@ -224,6 +228,8 @@ const JobSingle = ({ params }) => {
           </div>
         </div>
       </section>
+      <FooterDefault footerStyle="alternate5" />
+      {/* <!-- End Main Footer --> */}
     </>
   );
 };

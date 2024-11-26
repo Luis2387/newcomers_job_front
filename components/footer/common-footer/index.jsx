@@ -11,24 +11,15 @@ const index = ({ footerStyle = "" }) => {
           <div className="row">
             <div className="big-column col-xl-4 col-lg-3 col-md-12">
               <div className="footer-column about-widget">
-                <div className="logo">
-                  <a href="#">
-                    <Image
-                      width={154}
-                      height={50}
-                      src="/images/logo.svg"
-                      alt="brand"
-                    />
-                  </a>
-                </div>
+                
                 <p className="phone-num">
                   <span>Call us </span>
-                  <a href="thebeehost@support.com">123 456 7890</a>
+                  <a href="#">778 968 0255</a>
                 </p>
                 <p className="address">
-                  2329 Victoria Drive, Vancouver
+                  842 Cambie st, Vancouver
                   
-                  <a href="mailto:support@jobs.com" className="email">
+                  <a href="mailto:support@group4.com" className="email">
                    
                   </a>
                 </p>

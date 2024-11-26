@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 const FormInfoBox = () => {
   const router = useRouter();
   const [formValues, setFormValues] = useState({
+    id: null,
     phone: "",
     email: "",
     website: "",
@@ -29,6 +30,7 @@ const FormInfoBox = () => {
       try {
         const profileData = await EmployerService.getProfile();
         setFormValues({
+          id: profileData.id || null,
           phone: profileData.phone || "",
           email: profileData.email || "",
           website: profileData.website || "",
@@ -77,7 +79,21 @@ const FormInfoBox = () => {
     }
   };
 
+  const handleViewPublicProfile = () => {
+    router.push(`/employers-single/${formValues.id}`);
+  };
+
   return (
+    <>
+      <div className="form-header d-flex justify-content-between align-items-center mb-4">
+        <h4>Edit Company Profile</h4>
+        <button
+          className="theme-btn btn-style-one"
+          onClick={handleViewPublicProfile}
+        >
+          View Public Profile
+        </button>
+      </div>
     <form className="default-form" onSubmit={handleSubmit}>
       <div className="row">
         {/* Phone */}
@@ -211,6 +227,7 @@ const FormInfoBox = () => {
         </div>
       </div>
     </form>
+    </>
   );
 };
 

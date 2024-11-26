@@ -3,45 +3,32 @@ module.exports = [
     id: 1,
     title: "For Candidates",
     menuList: [
-      { name: "Browse Jobs", route: "/job-list-v11" },
-      { name: "Browse Categories", route: "/job-list-v3" },
       { name: "Candidate Dashboard", route: "/candidates-dashboard/dashboard" },
-      { name: "Job Alerts", route: "/candidates-dashboard/job-alerts" },
-      {
-        name: "My Bookmarks",
-        route: "/candidates-dashboard/short-listed-jobs",
-      },
+      { name: "My Profile", route: "/candidates-dashboard/my-profile" },
+      { name: "My Resume", route: "/candidates-dashboard/my-resume" },
     ],
   },
   {
     id: 2,
     title: "For Employers",
-    menuList: [
-      {
-        name: "Browse Candidates",
-        route: "/candidates-list-v1",
-      },
+    menuList: [     
       { name: "Employer Dashboard", route: "/employers-dashboard/dashboard" },
-      { name: "Add Job", route: "/employers-dashboard/post-jobs" },
-      { name: "Job Packages", route: "/employers-dashboard/packages" },
+      { name: "Company Profile", route: "/employers-dashboard/company-profile" },
+      { name: "Add Job", route: "/employers-dashboard/post-jobs" },      
     ],
   },
   {
     id: 3,
     title: "About Us",
     menuList: [
-      { name: "About Us", route: "/about" },
-      { name: "Terms Page", route: "/terms" },
-      { name: "Contact", route: "/contact" },
+      
     ],
   },
   {
     id: 4,
     title: "Helpful Resources",
     menuList: [
-      ,
-      { name: "Terms of Use", route: "/terms" },
-      { name: "Privacy Center", route: "/" },
+      
       
     ],
   },

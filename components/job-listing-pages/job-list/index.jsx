@@ -1,9 +1,11 @@
-import Login from "../../common/form/login/Login";
-import DefaulHeader2 from "../../header/DefaulHeader2";
-import MobileMenu from "../../header/MobileMenu";
 import FilterJobsBox from "./FilterJobsBox";
 import JobSearchForm from "./JobSearchForm";
 import FilterSidebar from "./FilterSidebar";
+import Login from "../../common/form/login/Login";
+import DefaulHeader from "../../header/DefaulHeader";
+import MobileMenu from "../../header/MobileMenu";
+import FooterDefault from "@/components/footer/common-footer";
+
 
 const index = () => {
   return (
@@ -14,8 +16,8 @@ const index = () => {
       <Login />
       {/* End Login Popup Modal */}
 
-      <DefaulHeader2 />
-      {/* End Header with upload cv btn */}
+      <DefaulHeader />
+      {/* End Header */}
 
       <MobileMenu />
       {/* End MobileMenu */}
@@ -60,6 +62,8 @@ const index = () => {
         </div>
         {/* End container */}
       </section>
+      <FooterDefault footerStyle="alternate5" />
+      {/* <!-- End Main Footer --> */}
       {/* <!--End Listing Page Section --> */}
     </>
   );

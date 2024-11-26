@@ -1,16 +1,48 @@
-"use client";
+'use client';
 
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import employers from "@/data/employers"; 
+import { useRouter } from 'next/navigation';
+import dynamic from "next/dynamic";
+import JobService from "@/services/JobService"; 
+import EmployerService from "@/services/EmployerService";
 import LoginPopup from "@/components/common/form/login/Login";
 import FooterDefault from "@/components/footer/common-footer";
 import DefaulHeader from "@/components/header/DefaulHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 
 const EmployerSingleClient = () => {
-  const { id } = useParams(); // Get the dynamic `id` from the URL
-  const employer =
-    employers.find((item) => item.id == id) || employers[0];
+  const { id } = useParams(); // Obtener el id dinámico
+  const [employer, setEmployer] = useState(null);
+  const [categoryMap, setCategoryMap] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const employerData = await EmployerService.getProfile(id);
+        const categories = await JobService.getCategories();
+        const categoryMap = Object.fromEntries(
+          categories.map((category) => [category.id, category.name])
+        );
+
+        employerData.category = categoryMap[employerData.category] || "N/A";
+
+        setCategoryMap(categoryMap);
+        setEmployer(employerData);
+      } catch (error) {
+        router.push("/404");
+        console.error("Error fetching employer profile or categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
 
   const styles = {
     section: {
@@ -34,20 +66,11 @@ const EmployerSingleClient = () => {
     mainContent: {
       flex: "1",
     },
-    sidebar: {
-      flex: "0.4",
-    },
     name: {
       fontSize: "32px",
       fontWeight: "bold",
       color: "#333",
       marginBottom: "10px",
-    },
-    tagline: {
-      fontSize: "16px",
-      fontStyle: "italic",
-      color: "#666",
-      marginBottom: "20px",
     },
     employerInfo: {
       listStyle: "none",
@@ -92,63 +115,51 @@ const EmployerSingleClient = () => {
       textDecoration: "none",
       fontWeight: "bold",
     },
-    bookmarkBtn: {
-      background: "none",
-      border: "none",
-      cursor: "pointer",
-      fontSize: "18px",
-      color: "#666",
-    },
   };
 
   return (
     <>
       <span className="header-span"></span>
-
       <LoginPopup />
       <DefaulHeader />
       <MobileMenu />
 
       <section style={styles.section}>
-        {/* Header Section */}
         <div style={styles.headerSection}>
           <div style={styles.headerContent}>
-            {/* Main Content */}
             <div style={styles.mainContent}>
-              <h4 style={styles.name}>{employer?.name}</h4>
-              <p style={styles.tagline}>
-                Your Trusted Partner in {employer?.industry}.
-              </p>
-              <ul style={styles.employerInfo}>
-                {/* <li style={styles.employerInfoItem}>
-                  <span style={styles.icon} className="flaticon-briefcase"></span>
-                  {employer?.industry}
-                </li> */}
+              <h4 style={styles.name}>{employer?.company_name || "N/A"}</h4>
 
+              <ul style={styles.employerInfo}>
                 <li style={styles.employerInfoItem}>
-                  <span style={styles.icon} className="flaticon-telephone"></span>{" "}
-                  Phone: {employer?.foundedYear}
+                  <span style={styles.icon} className="flaticon-briefcase"></span>
+                  {employer?.category || "N/A"}
                 </li>
                 <li style={styles.employerInfoItem}>
-                  <span style={styles.icon} className="flaticon-mail"></span>{" "}
-                  E-mail: {employer?.foundedYear}
+                  <span style={styles.icon} className="flaticon-telephone"></span>
+                  Phone: {employer?.phone || "N/A"}
+                </li>
+                <li style={styles.employerInfoItem}>
+                  <span style={styles.icon} className="flaticon-mail"></span>
+                  Email: {employer?.email || "N/A"}
                 </li>
                 <li style={styles.employerInfoItem}>
                   <span style={styles.icon} className="flaticon-worldwide"></span>
-                  Website: 
+                  Website:{" "}
+                  <a href={employer?.website || "#"} target="_blank" rel="noopener noreferrer">
+                    {employer?.website || "N/A"}
+                  </a>
                 </li>
                 <li style={styles.employerInfoItem}>
                   <span style={styles.icon} className="flaticon-map-locator"></span>
-                  Location: {employer?.location}
+                  Location: {employer?.location || "N/A"}
                 </li>
-
               </ul>
 
-              {/* About the Company */}
               <h4 style={styles.aboutHeading}>About the Company</h4>
               <p style={styles.aboutText}>
-                {employer?.description ||
-                  "We are dedicated to delivering excellence and innovation in every project. Join us and be part of a dynamic team."}
+                {employer?.profile_description ||
+                  "N/A"}
               </p>
 
               <div style={styles.btnBox}>
@@ -160,39 +171,17 @@ const EmployerSingleClient = () => {
                 >
                   Visit Website
                 </a>
-                <button style={styles.bookmarkBtn}>
-                  <i className="flaticon-bookmark"></i>
-                </button>
-              </div>
-            </div>
-
-            {/* Sidebar Highlights (Optional) */}
-            <div style={styles.sidebar}>
-              <div style={{ backgroundColor: "#fff", padding: "20px", borderRadius: "8px", boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)" }}>
-                <h4 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "15px", color: "#333" }}>Key Highlights</h4>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  <li style={styles.employerInfoItem}>
-                    <span style={styles.icon} className="flaticon-rocket"></span>
-                    Industry: {employer?.industry}
-                  </li>
-                  <li style={styles.employerInfoItem}>
-                    <span style={styles.icon} className="flaticon-group"></span>
-                    Employees: {employer?.companySize}
-                  </li>
-                  <li style={styles.employerInfoItem}>
-                    <span style={styles.icon} className="flaticon-trophy"></span>
-                    Awards: {employer?.awards || "N/A"}
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* <FooterDefault footerStyle="alternate5" /> */}
+      <FooterDefault footerStyle="alternate5" />
     </>
   );
 };
 
-export default EmployerSingleClient;
+export default dynamic(() => Promise.resolve(EmployerSingleClient), {
+  ssr: false,
+});

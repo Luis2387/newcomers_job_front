@@ -1,9 +1,7 @@
-import CallToActions from "../components/CallToActions";
 import DatePosted from "../components/DatePosted";
 import ExperienceLevel from "../components/ExperienceLevel";
 import JobType from "../components/JobType";
 import SalaryRangeSlider from "../components/SalaryRangeSlider";
-import Tag from "../components/Tag";
 
 const FilterSidebar = () => {
     return (
@@ -42,16 +40,10 @@ const FilterSidebar = () => {
                 </div>
                 {/* <!-- Filter Block --> */}
 
-                <div className="filter-block">
-                    <h4>Tags</h4>
-                    <Tag />
-                </div>
-                {/* <!-- Filter Block --> */}
+               
             </div>
             {/* Filter Outer */}
 
-            <CallToActions />
-            {/* <!-- End Call To Action --> */}
         </div>
     );
 };
