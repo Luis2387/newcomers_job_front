@@ -66,6 +66,7 @@ const JobSeekerFormInfoBox = () => {
             placeholder="Please enter your phone number"
             value={formValues.phone}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -78,6 +79,7 @@ const JobSeekerFormInfoBox = () => {
             placeholder="Please enter your E-mail"
             value={formValues.email}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -90,6 +92,7 @@ const JobSeekerFormInfoBox = () => {
             placeholder="Please enter your website"
             value={formValues.website}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -102,6 +105,7 @@ const JobSeekerFormInfoBox = () => {
             placeholder="Please enter your address"
             value={formValues.location}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -114,6 +118,7 @@ const JobSeekerFormInfoBox = () => {
             placeholder="www.linkedin.com/in/yourprofile"
             value={formValues.linkedin}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -125,6 +130,7 @@ const JobSeekerFormInfoBox = () => {
             placeholder="Describe about yourself"
             value={formValues.profile_description}
             onChange={handleInputChange}
+            required
           />
         </div>
 

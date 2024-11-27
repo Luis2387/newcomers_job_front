@@ -105,6 +105,7 @@ const FormInfoBox = () => {
             placeholder="Please enter your phone number"
             value={formValues.phone}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -117,6 +118,7 @@ const FormInfoBox = () => {
             placeholder="Please enter your E-mail"
             value={formValues.email}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -129,6 +131,7 @@ const FormInfoBox = () => {
             placeholder="Please enter your website"
             value={formValues.website}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -141,6 +144,7 @@ const FormInfoBox = () => {
             placeholder="Please enter your address"
             value={formValues.location}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -172,6 +176,7 @@ const FormInfoBox = () => {
             placeholder="www.facebook.com/yourprofile"
             value={formValues.facebook}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -183,6 +188,7 @@ const FormInfoBox = () => {
             placeholder="www.twitter.com/yourprofile"
             value={formValues.twitter}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -194,6 +200,7 @@ const FormInfoBox = () => {
             placeholder="www.linkedin.com/in/yourprofile"
             value={formValues.linkedin}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -205,6 +212,7 @@ const FormInfoBox = () => {
             placeholder="www.tiktok.com/@yourprofile"
             value={formValues.tiktok}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -216,6 +224,7 @@ const FormInfoBox = () => {
             placeholder="Describe about your company"
             value={formValues.profile_description}
             onChange={handleInputChange}
+            required
           />
         </div>
 
