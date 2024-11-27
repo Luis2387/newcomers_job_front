@@ -1,6 +1,6 @@
 import axios from "axios";
 import { axiosInstance } from "@/services/authService";
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "https://newcomers-job-app.onrender.com/api";
 
 const getProfile = async (id = null) => {
   const endpoint = id ? `/candidate-profile/${id}/` : `/candidate-profile/`;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { axiosInstance } from '@/services/authService';
 
-const API_URL = "http://localhost:8000/api";
+const API_URL = "https://newcomers-job-app.onrender.com/api";
 
 const getSkills = async () => {
   const response = await axios.get(`${API_URL}/skills/`);
