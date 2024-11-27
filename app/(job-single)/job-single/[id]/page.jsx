@@ -10,6 +10,7 @@ import DefaulHeader from "@/components/header/DefaultHeader";
 import MobileMenu from "@/components/header/MobileMenu";
 import FooterDefault from "@/components/footer/common-footer";
 
+
 const JobSingle = ({ params }) => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);

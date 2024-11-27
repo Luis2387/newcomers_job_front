@@ -1,15 +1,21 @@
-import { axiosInstance } from '@/services/authService';
+import axios from "axios";
+import { axiosInstance } from "@/services/authService";
+const API_BASE_URL = "http://localhost:8000/api";
 
-const ResumeService = {
-  getResume: async () => {
-    const response = await axiosInstance.get('/resume/');
-    return response.data;
-  },
-
-  updateResume: async (id, data) => {
-    const response = await axiosInstance.put(`/resume/`, data);
-    return response.data;
-  },
+const getResume = async (id = null) => {
+  const endpoint = id ? `/resume/${id}/` : `/resume/`;
+  const response = id
+    ? await axios.get(`${API_BASE_URL}${endpoint}`) // Sin autenticación
+    : await axiosInstance.get(endpoint); // Con autenticación
+  return response.data;
 };
 
-export default ResumeService;
+const updateResume = async (data) => {
+  const response = await axiosInstance.put(`/resume/`, data);
+  return response.data;
+};
+
+export default {
+  getResume,
+  updateResume,
+};
