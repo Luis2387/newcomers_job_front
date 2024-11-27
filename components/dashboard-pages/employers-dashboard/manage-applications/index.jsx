@@ -115,7 +115,7 @@ const Applicants = () => {
                                   <ul className="option-list">
                                     <li>
                                       <a
-                                        href={`/candidates-single-v1/${application.jobseeker.id}`}
+                                        href={`/candidates-single/${application.jobseeker_profile_id}`}
                                         data-text="View Profile"
                                         className="action-button"
                                       >
